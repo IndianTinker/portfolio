@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.8.1/css/tachyons.min.css">
+    <style>
+        @media (max-width: 480px) {
 
+            .hide {
+                display: none;
+            }
+        }
+    </style>
     <title>Document</title>
 </head>
 
@@ -14,15 +21,15 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <article class="pa4 pl5-ns fl system-sans-serif" id="app">
         <section>
-            <div class="f3 mw9 bt bw1 pb2 pt1 fl w-70 lh-title "><a href="index.html" class="link dim black">Rohit
+            <div class="f3-ns f5 f4-m mw9 bt bw1 pb2 pt1 fl w-70-ns w-40 w-40-m lh-title b "><a href="index.html" class="link dim black">Rohit
                     Gupta</a></div>
-            <div class="f6-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title"> <a href="about.html" class="link dim black">
+            <div class="f6-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="about.html" class="link dim black">
 
-                    <span class="fw1-ns">01</span> About </a></div>
-            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title"><a href="index.html" class="link dim black"><span
-                        class="fw1-ns">02</span> Works </a></div>
-            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-10 tl lh-title"><a href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit"
-                    class="link dim black"><span class="fw1-ns">03</span>
+                    <span class="fw1-ns tracked hide">01</span> About </a></div>
+            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="index.html" class="link dim black"><span
+                        class="fw1-ns tracked hide">02</span> Works </a></div>
+            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit"
+                    class="link dim black"><span class="fw1-ns tracked hide">03</span>
                     Contact </a></div>
 
         </section>
@@ -70,11 +77,12 @@
 
 
 
-        <div class=" f4  mt5 bt bw1 lh-title pt2 pb2 fw2 tracked tr"> <a href="otherProjects.html" class="link dim black">
+        <div class="f4-ns f5  mt5-ns mt3 bt bw1 lh-title pt2 pb2-ns pb1 fw2 tracked tr-ns tl"> <a href="otherProjects.html"
+                class="link dim black">
                 🤔OTHER
                 PROJECTS </a>
         </div>
-        <div class=" f4 bb bw0 lh-title pb2 fw2 tracked tr"> <a href="about.html" class="link dim black">ABOUT</a>
+        <div class=" f4-ns f5 bb bw0 lh-title pb2 fw2 tracked tr-ns tl"> <a href="about.html" class="link dim black">ABOUT</a>
         </div>
         <div class=" f6 pb5 bt bw1 pt2"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "Pipas con
                 café"</span>

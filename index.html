@@ -143,7 +143,7 @@
             http.send();
             http.onreadystatechange = (e) => {
                 var resp = http.responseText;
-
+                console.log(resp)
                 var data = JSON.parse(resp)
                 console.log(data.country)
 

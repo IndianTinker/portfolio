@@ -34,10 +34,10 @@
         </h1>
         <div class=" f3 mw9 mt5 bt bw1 lh-title pt2 pb2 fw4  tracked "> SELECTED PROJECTS </div>
         <p class="lh-copy mw9">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Projects showing multidisciplinary, research-focussed approach to addressing design opportunities. I use my
+            skills in
+            engineering, design, and research to build prototypes that can be evaluated to test solutions. These
+            prototypes act as a means to dialogue with the design context.
         </p>
 
         <div class="mw9 pt4-ns pv3" v-for="project in projects">
@@ -50,7 +50,7 @@
                         <h1 class="f2-ns f3 mt0 pt0 mw7 "> <span class="tracked f6 mr1 fw2 v-top">{{project.id}}</span>
                             {{project.title}}</h1>
                         <span class="tracked measure"> {{project.merit.toUpperCase()}}</span>
-                        <p class="lh-copy measure ">
+                        <p class="lh-copy measure-wide ">
                             {{project.desc}}
                         </p>
 
@@ -70,13 +70,14 @@
 
 
 
-        <div class=" f4 mw9 mt5 bt bw1 lh-title pt2 pb2 fw2 tracked tr"> <a href="otherProjects.html" class="link dim black">OTHER
-                PROJECTS 🤔</a>
+        <div class=" f4  mt5 bt bw1 lh-title pt2 pb2 fw2 tracked tr"> <a href="otherProjects.html" class="link dim black">
+                🤔OTHER
+                PROJECTS </a>
         </div>
-        <div class=" f4 mw9 bb bw0 lh-title pb2 fw2 tracked tr pb3"> <a href="about.html" class="link dim black">ABOUT</a>
+        <div class=" f4 bb bw0 lh-title pb2 fw2 tracked tr"> <a href="about.html" class="link dim black">ABOUT</a>
         </div>
-        <div class="mw9 f6 pb5 bt bw1 pt2"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "pipas con
-                cafe"</span>
+        <div class=" f6 pb5 bt bw1 pt2"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "Pipas con
+                café"</span>
         </div>
 
 
@@ -96,31 +97,31 @@
                     id: "01",
                     title: "Paisa Stick - Tokenized Tangible Currency Interface ",
                     merit: "WINNER, STUDENT DESIGN CHALLENGE, CHI-17, DENVER",
-                    desc: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.At vero eos et accusam et justo duo dolores et ea rebum.no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                    postURL: "works/project.html",
-                    imgURL: "https://i.imgur.com/cnFUliU.png"
+                    desc: "Paisa stick is a tangible payment interface designed to perform cashless transactions. We designed it by understanding the conceptual model of senior members in the society towards money. The device works as a remote and transfers value from the device to other types of devices like phones, IVRs,and android apps. User is always informed about the money he has like a wallet. She can simply press the buttons to generate any required currency value. It can be recharged with value like a prepaid phone.",
+                    postURL: "works/paisa.html",
+                    imgURL: "https://i.imgur.com/DQTNFt3.png"
                 },
                 {
                     id: "02",
                     title: "FAND : A four limbed interaction paradigm for computing interfaces ",
                     merit: "Selected Publication at SeGAH 2018, Vienna",
-                    desc: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore etdolore magna aliquyam erat,sed diam voluptua.At vero eos et accusam et justo duo dolores et ea rebum.no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    desc: "FAND (Foot associated neural device) is a haptic interface device that allows users to operate a computer using all four limbs. The device uses learned motion gestures that perform several interactions. Devices like these are useful in times when most of our interaction are performed by the hands. The interaction model developed in the project divides a task in a primary action and a secondary action. The primary, high priority and accurate task is handled by the hand, while the secondary tasks are handled by the foot. In our study it was found that the foot device offers comparable learning and may be considered as a possible modality.",
                     postURL: "works/fand.html",
                     imgURL: "https://i.imgur.com/Pr2hwhl.png"
                 },
                 {
                     id: "03",
                     title: "ConnectNeXT : Smart car ecosystem for Tata Vehicles ",
-                    merit: "First indegenous smartcar platform for Indian Automotive Market",
-                    desc: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore etdolore magna aliquyam erat,sed diam voluptua.At vero eos et accusam et justo duo dolores et ea rebum.no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    merit: "First indigenous smart-car platform for Indian Automotive Market",
+                    desc: "ConnectNeXT is a infotainment and telematics platform developed by Tata Motors Research. It allows users to interact more immersively with the car, provide actionable data insights, and be connected with the brand. The work involved design, development, and testing of five  android apps. These apps allow users to control the infotainment system, troubleshoot common vehicle problems, improve driving with data, get assistance in case of emergency, and share music inside that car. ",
                     postURL: "works/connectnext.html",
                     imgURL: "https://i.imgur.com/CkHrLrh.png"
                 },
                 {
                     id: "04",
                     title: "PINCHPHONE : A toy for pinch exercises of kids affected by Cerebral Palsy ",
-                    merit: "Open-source exer toy",
-                    desc: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore etdolore magna aliquyam erat,sed diam voluptua.At vero eos et accusam et justo duo dolores et ea rebum.no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    merit: "Open-source exertoy",
+                    desc: "Pinchphone is an exertoy that introduces playful and sensorial elements to the pinch exercise performed by kids affected by Cerebral Palsy. The exercise routine of cerebral palsy kids is very boring and repetitive . This seems to affect their adherence to the treatment and moreover impact their sensorial and social growth. Pinchphone tries to make the boring routine of picking beans by adding audio, color, sensorial, and cognitive aspects in a toy. The feedback received from therapists and parents motivated me to opensource the toy and work on easy reproducibility of the toy.",
                     postURL: "works/pinchphone.html",
                     imgURL: "https://i.imgur.com/Q0Ee7UT.png"
                 },
@@ -128,7 +129,7 @@
                     id: "05",
                     title: "Solaris : Indian Solar Car Project ",
                     merit: "first indian car at World solar challenge australia",
-                    desc: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore etdolore magna aliquyam erat,sed diam voluptua.At vero eos et accusam et justo duo dolores et ea rebum.no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    desc: "Solaris is a team that builds car that run on solar energy for a 3000 km long marathon race in Australia. The cars we have built have received a lot of media attention and praise from the Chief Ministers and President of the country. I designed the vehicle electronics of the first car and was the team supervisor. The project taught me several aspects of engineering in a resource constrained environment, continuous innovation, and project management. Our first car was able cross the finish line despite being the lowest cost vehicle in the entire competition.  ",
                     postURL: "works/solaris.html",
                     imgURL: "https://i.imgur.com/74vIv8q.jpg"
                 },

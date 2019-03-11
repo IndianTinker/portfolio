@@ -152,17 +152,17 @@
             http.send();
             http.onreadystatechange = (e) => {
                 var resp = http.responseText;
-                console.log(resp)
+                //console.log(resp)
                 var data = JSON.parse(resp)
-                console.log(data.country)
+                // console.log(data.country)
 
                 if (data.country === "Spain") {
                     this.greeting = "¡Hola! "
-                } else if (data.country === "Germany") {
+                } else if (data.country === "Germany" || data.country === "Netherlands") {
                     this.greeting = "Hallo! "
                 } else if (data.country === "Taiwan" || data.country === "China" || data.country ===
                     "Hong Kong") {
-                    this.greeting = "你好 ! "
+                    this.greeting = "你好! "
                 } else if (data.country === "Russia") {
                     this.greeting = "Здравствуйте! "
                 } else if (data.country === "Sweden" || data.country === "Denmark") {
@@ -172,11 +172,11 @@
                 } else if (data.country === "India") {
                     this.greeting = "नमस्ते! "
                 } else if (data.country === "Japan") {
-                    this.greeting = "こんにちは ! "
+                    this.greeting = "こんにちは! "
                 } else if (data.country === "Italy") {
-                    this.greeting = "Ciao ! "
+                    this.greeting = "Ciao! "
                 } else {
-                    this.greeting = "Hello ! "
+                    this.greeting = "Hello! "
                 }
             }
         },

@@ -14,22 +14,28 @@
             }
         }
     </style>
-    <title>Document</title>
+    <title>Hello ! </title>
 </head>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <article class="pa4 pl5-ns fl system-sans-serif" id="app">
+    <article class="pa4 ph5-ns fl system-sans-serif" id="app">
         <section>
             <div class="f3-ns f5 f4-m mw9 bt bw1 pb2 pt1 fl w-70-ns w-40 w-40-m lh-title b "><a href="index.html" class="link dim black">Rohit
                     Gupta</a></div>
-            <div class="f6-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="about.html" class="link dim black">
+            <div class="f5-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="about.html" class="link dim black">
+                    <!-- 
+                    <span class="fw1-ns tracked hide">01</span>  -->
+                    About </a></div>
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="index.html#works"
+                    class="link dim black">
+                    <!-- <span
+                        class="fw1-ns tracked hide">02</span>  -->
+                    Projects </a></div>
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit"
+                    class="link dim black">
+                    <!-- <span class="fw1-ns tracked hide">03</span> -->
 
-                    <span class="fw1-ns tracked hide">01</span> About </a></div>
-            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="index.html" class="link dim black"><span
-                        class="fw1-ns tracked hide">02</span> Works </a></div>
-            <div class="f6-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit"
-                    class="link dim black"><span class="fw1-ns tracked hide">03</span>
                     Contact </a></div>
 
         </section>
@@ -37,15 +43,16 @@
         <h1 class="lh-title  f-subheadline-ns f2 mt6-ns mt5">
             <span>{{greeting}}</span> I am an Interaction Designer from India. I like to build things with a research
             focus.
-
         </h1>
-        <div class=" f3 mw9 mt5 bt bw1 lh-title pt2 pb2 fw4  tracked "> SELECTED PROJECTS </div>
-        <p class="lh-copy mw9">
+        <a name="work"></a>
+        <div class=" f3 mw9 mt5 bt lh-title pt2 pb2 fw4  tracked "> SELECTED PROJECTS </div>
+        <!-- <p class="lh-copy mw9">
             Projects showing multidisciplinary, research-focussed approach to addressing design opportunities. I use my
             skills in
             engineering, design, and research to build prototypes that can be evaluated to test solutions. These
             prototypes act as a means to dialogue with the design context.
-        </p>
+        </p> -->
+        <a name="works"></a>
 
         <div class="mw9 pt4-ns pv3" v-for="project in projects">
             <a :href="project.postURL" class="link dim black">
@@ -54,7 +61,7 @@
 
 
 
-                        <h1 class="f2-ns f3 mt0 pt0 mw7 "> <span class="tracked f6 mr1 fw2 v-top">{{project.id}}</span>
+                        <h1 class="f2-ns f3 mt0 pt0 mw7 "> <span class="tracked f4 v-top  fw2">{{project.id}}</span>
                             {{project.title}}</h1>
                         <span class="tracked measure"> {{project.merit.toUpperCase()}}</span>
                         <p class="lh-copy measure-wide ">
@@ -62,7 +69,7 @@
                         </p>
 
                     </div>
-                    <div class="fl w-100 w-40-ns mt0 ph1-ns ">
+                    <div class="fl w-100 w-40-ns mt0 ph1-ns dim">
                         <!-- <img :src="project.imgURL" class="w-100 aspect-ratio aspect-ratio--4x3" :alt="project.title"> -->
                         <div class="aspect-ratio aspect-ratio--16x9 mb4">
                             <div class="aspect-ratio--object cover" :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
@@ -77,15 +84,17 @@
 
 
 
-        <div class="f4-ns f5  mt5-ns mt3 bt bw1 lh-title pt2 pb2-ns pb1 fw2 tracked tr-ns tl"> <a href="otherProjects.html"
+        <div class="f4-ns f5  mt5-ns mt3 bt lh-title pt2 pb2-ns pb1 fw2 tracked tr-ns tl"> <a href="otherProjects.html"
                 class="link dim black">
                 🤔OTHER
                 PROJECTS </a>
         </div>
         <div class=" f4-ns f5 bb bw0 lh-title pb2 fw2 tracked tr-ns tl"> <a href="about.html" class="link dim black">ABOUT</a>
         </div>
-        <div class=" f6 pb5 bt bw1 pt2"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "Pipas con
-                café"</span>
+        <div class=" f6 pb5 bt bw1 pt2 lh-copy"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "Pipas
+                con
+                café".</span> Check out the <a href="colo.html" class="link black hover-bg-light-purple">Colophon</a>
+            to know more.
         </div>
 
 
@@ -95,57 +104,61 @@
 
     </article>
 
+
 </body>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
+            isActive: true,
             greeting: "Hello! ", //नमस्ते!
             projects: [{
                     id: "01",
-                    title: "Paisa Stick - Tokenized Tangible Currency Interface ",
+                    title: "Paisa Stick - A tangible cashless payment interface ",
                     merit: "WINNER, STUDENT DESIGN CHALLENGE, CHI-17, DENVER",
                     desc: "Paisa stick is a tangible payment interface designed to perform cashless transactions. We designed it by understanding the conceptual model of senior members in the society towards money. The device works as a remote and transfers value from the device to other types of devices like phones, IVRs,and android apps. User is always informed about the money he has like a wallet. She can simply press the buttons to generate any required currency value. It can be recharged with value like a prepaid phone.",
                     postURL: "works/paisa.html",
-                    imgURL: "https://i.imgur.com/DQTNFt3.png"
+                    imgURL: "https://i.imgur.com/0ySThm9.jpg?2"
                 },
                 {
                     id: "02",
-                    title: "FAND : A four limbed interaction paradigm for computing interfaces ",
+                    title: "FAND : A foot interface device for four limb interactions",
                     merit: "Selected Publication at SeGAH 2018, Vienna",
                     desc: "FAND (Foot associated neural device) is a haptic interface device that allows users to operate a computer using all four limbs. The device uses learned motion gestures that perform several interactions. Devices like these are useful in times when most of our interaction are performed by the hands. The interaction model developed in the project divides a task in a primary action and a secondary action. The primary, high priority and accurate task is handled by the hand, while the secondary tasks are handled by the foot. In our study it was found that the foot device offers comparable learning and may be considered as a possible modality.",
                     postURL: "works/fand.html",
-                    imgURL: "https://i.imgur.com/Pr2hwhl.png"
+                    imgURL: "https://i.imgur.com/4nMvd5Q.png"
                 },
+
                 {
                     id: "03",
-                    title: "ConnectNeXT : Smart car ecosystem for Tata Vehicles ",
-                    merit: "First indigenous smart-car platform for Indian Automotive Market",
-                    desc: "ConnectNeXT is a infotainment and telematics platform developed by Tata Motors Research. It allows users to interact more immersively with the car, provide actionable data insights, and be connected with the brand. The work involved design, development, and testing of five  android apps. These apps allow users to control the infotainment system, troubleshoot common vehicle problems, improve driving with data, get assistance in case of emergency, and share music inside that car. ",
-                    postURL: "works/connectnext.html",
-                    imgURL: "https://i.imgur.com/CkHrLrh.png"
-                },
-                {
-                    id: "04",
-                    title: "PINCHPHONE : A toy for pinch exercises of kids affected by Cerebral Palsy ",
+                    title: "PINCHPHONE : An exertoy for kids affected by Cerebral Palsy ",
                     merit: "Open-source exertoy",
                     desc: "Pinchphone is an exertoy that introduces playful and sensorial elements to the pinch exercise performed by kids affected by Cerebral Palsy. The exercise routine of cerebral palsy kids is very boring and repetitive . This seems to affect their adherence to the treatment and moreover impact their sensorial and social growth. Pinchphone tries to make the boring routine of picking beans by adding audio, color, sensorial, and cognitive aspects in a toy. The feedback received from therapists and parents motivated me to opensource the toy and work on easy reproducibility of the toy.",
                     postURL: "works/pinchphone.html",
-                    imgURL: "https://i.imgur.com/Q0Ee7UT.png"
+                    imgURL: "https://i.imgur.com/XFA9Yxn.jpg"
                 },
                 {
-                    id: "05",
-                    title: "Solaris : Indian Solar Car Project ",
-                    merit: "first indian car at World solar challenge australia",
-                    desc: "Solaris is a team that builds car that run on solar energy for a 3000 km long marathon race in Australia. The cars we have built have received a lot of media attention and praise from the Chief Ministers and President of the country. I designed the vehicle electronics of the first car and was the team supervisor. The project taught me several aspects of engineering in a resource constrained environment, continuous innovation, and project management. Our first car was able cross the finish line despite being the lowest cost vehicle in the entire competition.  ",
-                    postURL: "works/solaris.html",
-                    imgURL: "https://i.imgur.com/74vIv8q.jpg"
-                },
+                    id: "04",
+                    title: "ConnectNeXT : Smart car ecosystem for Tata Vehicles ",
+                    merit: "First indigenous smart-car platform in Indian Automotive Market",
+                    desc: "ConnectNeXT is a infotainment and telematics platform developed by Tata Motors Research. It allows users to interact more immersively with the car,provide actionable data insights,and be connected with the brand.The workinvolved design,development, and testing of five android apps.These apps allow users to control the infotainment system, troubleshoot common vehicle problems, improve driving with data, get assistance in case ofemergency,and shar music inside that car.",
+                    postURL: "works/connectnext.html",
+                    imgURL: "https://i.imgur.com/uvEnZCG.png?2"
+                }
+                // },
+                // {
+                //     id: "05",
+                //     title: "Solaris : Indian Solar Car Project ",
+                //     merit: "first indian car at World solar challenge australia",
+                //     desc: "Solaris is a team that builds car that run on solar energy for a 3000 km long marathon race in Australia. The cars we have built have received a lot of media attention and praise from the Chief Ministers and President of the country. I designed the vehicle electronics of the first car and was the team supervisor. The project taught me several aspects of engineering in a resource constrained environment, continuous innovation, and project management. Our first car was able cross the finish line despite being the lowest cost vehicle in the entire competition.  ",
+                //     postURL: "works/solaris.html",
+                //     imgURL: "https://i.imgur.com/74vIv8q.jpg"
+                // },
 
             ]
         },
-
         created() {
+
             const http = new XMLHttpRequest();
             const url2 = 'http://ip-api.com/json';
             http.open("GET", url2);
@@ -157,29 +170,77 @@
                 // console.log(data.country)
 
                 if (data.country === "Spain") {
-                    this.greeting = "¡Hola! "
+                    this.greeting = "¡Hola! ";
+                    document.title = this.greeting + " Amigo";
                 } else if (data.country === "Germany" || data.country === "Netherlands") {
-                    this.greeting = "Hallo! "
+                    this.greeting = "Hallo! ";
+                    document.title = this.greeting + "Freund";
                 } else if (data.country === "Taiwan" || data.country === "China" || data.country ===
                     "Hong Kong") {
-                    this.greeting = "你好! "
+                    this.greeting = "你好! ";
+                    document.title = this.greeting + "朋友";
                 } else if (data.country === "Russia") {
-                    this.greeting = "Здравствуйте! "
+                    this.greeting = "Привет! ";
+                    document.title = this.greeting;
                 } else if (data.country === "Sweden" || data.country === "Denmark") {
-                    this.greeting = "Hej! "
+                    this.greeting = "Hej! ";
+                    document.title = this.greeting + "kompis";
                 } else if (data.country === "Switzerland") {
-                    this.greeting = "Grüezi! "
+                    this.greeting = "Grüezi! ";
+                    document.title = this.greeting;
                 } else if (data.country === "India") {
-                    this.greeting = "नमस्ते! "
+                    this.greeting = "नमस्ते! ";
+                    document.title = this.greeting + "दोस्त";
                 } else if (data.country === "Japan") {
-                    this.greeting = "こんにちは! "
+                    this.greeting = "こんにちは! ";
+                    document.title = "こんにちは友人";
                 } else if (data.country === "Italy") {
-                    this.greeting = "Ciao! "
+                    this.greeting = "Ciao! ";
+                    document.title = this.greeting + "Amico";
                 } else {
-                    this.greeting = "Hello! "
+                    this.greeting = "Hello! ";
+                    document.title = this.greeting + "Friend";
                 }
+
+                document.addEventListener('visibilitychange', function () {
+                    if (document.hidden) {
+                        // stop running expensive task
+
+
+                        app.help(true);
+
+                    } else {
+
+                        app.help(false);
+
+
+                    }
+                });
+
             }
         },
+        methods: {
+            help: function (value) {
+                var times;
+                if (value) {
+
+                    document.title = ":(";
+                    times = setTimeout(function () {
+                        document.title = "Hey?!"
+                    }, 1500)
+                    times = setTimeout(function () {
+                        document.title = "There is more !"
+                    }, 2500)
+                    times = setTimeout(function () {
+                        document.title = "👋Come Back!";
+                    }, 3200)
+
+                } else {
+                    document.title = "🤩 Welcome Back !"
+                    clearTimeout(times)
+                }
+            }
+        }
     })
 </script>
 

@@ -21,9 +21,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <article class="pa4 ph5-ns fl system-sans-serif" id="app">
         <section>
-            <div class="f3-ns f5 f4-m mw9 bt bw1 pb2 pt1 fl w-70-ns w-40 w-40-m lh-title b "><a href="index.html" class="link dim black">Rohit
+            <div class="f3-ns f5 f4-m mw9 bt bw1 pb2 pt1 fl w-70-ns w-40 w-40-m lh-title b "><a href="index.html"
+                    class="link dim black">Rohit
                     Gupta</a></div>
-            <div class="f5-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="about.html" class="link dim black">
+            <div class="f5-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="about.html"
+                    class="link dim black">
                     <!-- 
                     <span class="fw1-ns tracked hide">01</span>  -->
                     About </a></div>
@@ -32,8 +34,8 @@
                     <!-- <span
                         class="fw1-ns tracked hide">02</span>  -->
                     Projects </a></div>
-            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit"
-                    class="link dim black">
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a
+                    href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit" class="link dim black">
                     <!-- <span class="fw1-ns tracked hide">03</span> -->
 
                     Contact </a></div>
@@ -49,12 +51,13 @@
 
 
 
-        <div class="fl w-100 mb3 bt">
+        <div class="fl w-100 mb3">
             <h1 class="f2-ns f3 mt0 pt2">Design</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2" v-for="project in design">
                 <a :href="project.postURL" class="link dim black">
                     <div class="aspect-ratio aspect-ratio--4x3 mb2">
-                        <div class="aspect-ratio--object cover" :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
+                        <div class="aspect-ratio--object cover"
+                            :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
 
 
                     </div>
@@ -68,7 +71,8 @@
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2-ns pv2" v-for="project in creative">
                 <a :href="project.postURL" class="link dim black">
                     <div class="aspect-ratio aspect-ratio--4x3 mb2">
-                        <div class="aspect-ratio--object cover" :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
+                        <div class="aspect-ratio--object cover"
+                            :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
 
 
                     </div>
@@ -82,7 +86,8 @@
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2-ns pv2" v-for="project in physical">
                 <a :href="project.postURL" class="link dim black">
                     <div class="aspect-ratio aspect-ratio--4x3 mb2">
-                        <div class="aspect-ratio--object cover" :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
+                        <div class="aspect-ratio--object cover"
+                            :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
 
 
                     </div>
@@ -103,7 +108,8 @@
             </div>
         </section>
         <section class="f4-ns f5 fl w-100 pt2 ">
-            <div class="lh-title fw2 tracked tr-ns tl"> <a href="index.html" class="link dim black"> NOTABLE WORKS</a>
+            <div class="lh-title fw2 tracked tr-ns tl"> <a href="index.html" class="link dim black"> NOTABLE
+                    PROJECTS</a>
             </div>
         </section>
         <section class="f4-ns f5 fl w-100 pv2 ">
@@ -131,15 +137,21 @@
         el: '#app',
         data: {
             design: [{
+                    title: "Automotive Acoustic Strategy",
+                    imgURL: "https://i.imgur.com/nLyUr3Y.jpg",
+                    postURL: "http://rohitg.in/2015/04/01/TMLAcoustics/"
+                }, {
+                    title: "Spatial visualization of Indian Railways network",
+                    imgURL: "https://i.imgur.com/5nMTnGP.png",
+                    postURL: "http://rohitg.in/2017/09/10/DataViz/"
+                },
+                {
                     title: "missingMenu- Understanding food menus as a language",
                     imgURL: "https://i.imgur.com/rzDWfcC.png",
                     postURL: "http://rohitg.in/2019/03/01/missingMenu/"
                 },
+
                 {
-                    title: "Spatial visualization of Indian Railways network",
-                    imgURL: "https://i.imgur.com/5nMTnGP.png",
-                    postURL: "http://rohitg.in/2017/09/10/DataViz/"
-                }, {
                     title: "Local - Gamification in participatory GIS",
                     imgURL: "https://i.imgur.com/5Dhk5Kf.png",
                     postURL: "http://rohitg.in/2017/06/03/local/"
@@ -205,6 +217,11 @@
                     title: "CricPi- The Minimalistic Live Cricket interface",
                     imgURL: "https://farm4.staticflickr.com/3816/19440950239_a30060af0c_z.jpg",
                     postURL: "http://rohitg.in/2015/07/12/CrickPi/"
+                },
+                {
+                    title: "Indian Solar Car Project for World Solar Challenge, Australia",
+                    imgURL: "https://i.imgur.com/74vIv8q.jpg",
+                    postURL: "http://rohitg.in/2014/04/01/Solaris/"
                 }
 
             ]

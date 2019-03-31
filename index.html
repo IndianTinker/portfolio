@@ -34,11 +34,11 @@
                     <!-- <span
                         class="fw1-ns tracked hide">02</span>  -->
                     Projects </a></div>
-            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a
-                    href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit" class="link dim black">
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="http://rohitg.in/"
+                    class="link dim black" target="_blank">
                     <!-- <span class="fw1-ns tracked hide">03</span> -->
 
-                    Contact </a></div>
+                    Blog </a></div>
 
         </section>
         <br>
@@ -56,14 +56,15 @@
         </p> -->
         <a name="works"></a>
 
-        <div class="mw9 pt4-ns pv3" v-for="project in projects">
+        <div class="mw9 pt4-ns pv3 bt " v-for="project in projects">
             <a :href="project.postURL" class="link dim black">
                 <div class="cf">
                     <div class="fl w-100 w-60-ns pr2">
 
 
 
-                        <h1 class="f2-ns f3 mt0 pt0 mw7 "> <span class="tracked f4 v-top  fw2">{{project.id}}</span>
+                        <h1 class="f2-ns f3 mt0 pt0 mw7 ">
+                            <!-- <span class="tracked f4 v-top  fw2">{{project.id}}</span> -->
                             {{project.title}}</h1>
                         <span class="tracked measure"> {{project.merit.toUpperCase()}}</span>
                         <p class="lh-copy measure-wide ">
@@ -73,7 +74,7 @@
                     </div>
                     <div class="fl w-100 w-40-ns mt0 ph1-ns dim">
                         <!-- <img :src="project.imgURL" class="w-100 aspect-ratio aspect-ratio--4x3" :alt="project.title"> -->
-                        <div class="aspect-ratio aspect-ratio--16x9 mb4">
+                        <div class="aspect-ratio aspect-ratio--4x3 mb4">
                             <div class="aspect-ratio--object cover"
                                 :style="{ backgroundImage: 'url(' + project.imgURL + ')'}"></div>
 
@@ -232,15 +233,15 @@
                     times = setTimeout(function () {
                         document.title = "Hey?!"
                     }, 1500)
-                    times = setTimeout(function () {
-                        document.title = "There is more !"
-                    }, 2500)
+
                     times = setTimeout(function () {
                         document.title = "👋Come Back!";
-                    }, 3200)
+                    }, 2000)
 
                 } else {
-                    document.title = "🤩 Welcome Back !"
+                    document.title = "Rohit Gupta"
+
+
                     clearTimeout(times)
                 }
             }

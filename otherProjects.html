@@ -34,11 +34,11 @@
                     <!-- <span
                         class="fw1-ns tracked hide">02</span>  -->
                     Projects </a></div>
-            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a
-                    href="mailto:indiantinker@gmail.com?Subject=Hello%20Rohit" class="link dim black">
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="http://rohitg.in/"
+                    class="link dim black" target="_blank">
                     <!-- <span class="fw1-ns tracked hide">03</span> -->
 
-                    Contact </a></div>
+                    Blog </a></div>
 
         </section>
         <div class="mw9 fl w-100">
@@ -51,7 +51,7 @@
 
 
 
-        <div class="fl w-100 mb3">
+        <div class="fl w-100 mb3 pb4-ns">
             <h1 class="f2-ns f3 mt0 pt2">Design</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2" v-for="project in design">
                 <a :href="project.postURL" class="link dim black">
@@ -66,7 +66,7 @@
             </div>
 
         </div>
-        <div class="mw9 fl w-100 mb3 bt">
+        <div class="mw9 fl w-100 mb3 bt pb4-ns">
             <h1 class="f2-ns f3 mt0-ns mt0 pt2">Creative Technology and Installations</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2-ns pv2" v-for="project in creative">
                 <a :href="project.postURL" class="link dim black">
@@ -81,7 +81,7 @@
             </div>
 
         </div>
-        <div class="mw9 fl w-100 mb3 bt">
+        <div class="mw9 fl w-100 mb3 bt pb4-ns">
             <h1 class="f2-ns f3 mt0 pt2 ">Physical Computing</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2-ns pv2" v-for="project in physical">
                 <a :href="project.postURL" class="link dim black">
@@ -194,7 +194,11 @@
                 }
             ],
             physical: [{
-                    title: "The Electronic Inaugural Lamp",
+                    title: "Indian Solar Car Project for World Solar Challenge, Australia",
+                    imgURL: "https://i.imgur.com/74vIv8q.jpg",
+                    postURL: "http://rohitg.in/2014/04/01/Solaris/"
+                }, {
+                    title: "The Electronic Inauguration Lamp",
                     imgURL: "https://i.imgur.com/ENqtctj.jpg",
                     postURL: "http://rohitg.in/2013/04/29/InnaugLamp/"
                 },
@@ -204,7 +208,7 @@
                     postURL: "http://rohitg.in/2014/07/22/UberCube/"
                 },
                 {
-                    title: "Hearty!",
+                    title: "Hearty - Interactive LED Badges!",
                     imgURL: "https://farm6.staticflickr.com/5718/21827990404_cdee949005_k.jpg",
                     postURL: "http://rohitg.in/2015/11/14/hearty/"
                 },
@@ -218,11 +222,19 @@
                     imgURL: "https://farm4.staticflickr.com/3816/19440950239_a30060af0c_z.jpg",
                     postURL: "http://rohitg.in/2015/07/12/CrickPi/"
                 },
+
                 {
-                    title: "Indian Solar Car Project for World Solar Challenge, Australia",
-                    imgURL: "https://i.imgur.com/74vIv8q.jpg",
-                    postURL: "http://rohitg.in/2014/04/01/Solaris/"
-                }
+                    title: "RXing into the HAM World using RTL-SDR",
+                    imgURL: "https://farm2.staticflickr.com/1454/23327760983_c15f7745b6_z.jpg",
+                    postURL: "http: //rohitg.in/2016/01/31/Hamrx/"
+                },
+                {
+                    title: "AR Visiting Cards",
+                    imgURL: "https://farm2.staticflickr.com/1612/25899192545_375d9f0a32_z.jpg",
+                    postURL: "http://rohitg.in/2016/03/19/ARCards/"
+                },
+
+
 
             ]
         }

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.8.1/css/tachyons.min.css">
+    <style>
+        @media (max-width: 480px) {
+
+            .hide {
+                display: none;
+            }
+
+            .videoWrapper {
+                position: relative;
+                padding-bottom: 56.25%;
+                /* 16:9 */
+                padding-top: 25px;
+                height: 0;
+            }
+
+            .videoWrapper iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+    <title>👟FAND </title>
+</head>
+
+<body>
+
+    <article class="pa4 ph5-ns system-sans-serif w-100 fl" id="app">
+        <section>
+            <div class="f3-ns f5 f4-m mw9 bt bw1 pb2 pt1 fl w-70-ns w-40 w-40-m lh-title b "><a href="../index.html"
+                    class="link dim black">Rohit
+                    Gupta</a></div>
+            <div class="f5-ns f6  mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 w-20-m tl lh-title-ns"> <a href="../about.html"
+                    class="link dim black">
+                    <!-- 
+                    <span class="fw1-ns tracked hide">01</span>  -->
+                    About </a></div>
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="../index.html#works"
+                    class="link dim black">
+                    <!-- <span
+                        class="fw1-ns tracked hide">02</span>  -->
+                    Projects </a></div>
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="http://rohitg.in/"
+                    class="link dim black" target="_blank">
+                    <!-- <span class="fw1-ns tracked hide">03</span> -->
+
+                    Blog </a></div>
+
+        </section>
+
+
+        <div class="center mw6 mw7-ns">
+            <div class="fl w-100-ns mt5-ns mb5-ns w-100 mb2">
+                <p class="tracked f5-ns">DESIGN RESEARCH</p>
+                <h1 class="lh-title f1-ns mt0 mb4">
+                    FAND : A foot interface device for four limb interactions
+
+                </h1>
+                <div class="fl w-40-ns w-100 f5-ns pb0-ns pb3 measure lh-copy">
+                    We use hands for all the interactions we perform. How could we design interactions for the foot and
+                    use them with hands?</div>
+                <div class="fl w-50-ns w-100 f5-ns f6  ml3-ns pl6-ns  mb3 lh-copy"><span
+                        class="tracked measure">SELECTED
+                        PUBLICATION
+                        AT SeGAH 2018, VIENNA</span>
+                </div>
+
+            </div>
+
+            <!-- Do not touch anything above this -->
+            <div class="fl w-100">
+
+                <div class=" gray f5 lh-copy pv2 mw7-ns center mw9 videoWrapper">
+                    <iframe width="800" height="480" src="https://www.youtube.com/embed/ByvJjlRdu9M" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe><br>
+                    A video demonstarting the concept.
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="center-ns mw7-ns ph6-ns mw9">
+            <div class="fl w-100">
+                <p class="lh-copy f5-ns f5">
+                    FAND (Foot associated neural device) is a haptic interface device that allows users to operate a
+                    computer (or certain
+                    applications) using all four limbs. The device employs user trained motion gestures that are bound
+                    to
+                    actions on a
+                    compatible application. So, a flick could perform a "next" interaction.<br> <br> One may be
+                    surprised to know that foot is only 10% less accurate than the
+                    hand. The interaction
+                    model developed in the project divides a task in a primary action and a secondary action. The
+                    primary, high priority
+                    and accurate task, is performed by the hand, while the secondary tasks are handled by the foot.
+                    Devices like these are
+                    useful in times when most of our interaction are performed by the hands. This has increased the
+                    physiological load on
+                    hands.<br><br> The possible applications are in applications like creative apps, Walking in Place
+                    (WIP)
+                    interactions in VR, and
+                    gaming. I evaluated the device by comparing it with a novel hand interaction device like pressure
+                    pads. In the study
+                    it was found that the
+                    foot device offers comparable learning and may be considered as a possible modality. The project
+                    had a decently long design process of about 6 months.
+                </p>
+                <h1 class="f3-ns lh-title-ns mb2 ">Context</h1>
+                <section class="lh-copy f5">
+                    When was the last time you complained about pain in your hands? Was it because you have been
+                    working hard and doing all your using hands? Or you never
+                    asked yourself if you could work with your foot as well? I asked myself this question when I
+                    observed how much we use our hands in the modern work environment
+                    and how little we use our foot. <br><br>Majority of the input interaction with computers seem to be
+                    happening
+                    using only the hands. This has increased the physiological load on the
+                    hand. Recent increase in cases of hand related orthopaedic disorders is
+                    often associated with excessive use of hands with computers. Majority of
+                    extended work performed with computers involves repetitive
+                    interactions.
+                    Further, our foot lost graspability during evolution but are only 10% less accurate in
+                    maintaining position compared to the hands. There may be a possibility of reducing hand load by
+                    involving the foot. This would share the total load and improve work
+                    efficiency.
+                    <h1 class="f4-ns lh-copy-ns mb2 lh-copy ">Goals</h1>
+                    The goals of the project were :
+                    <ol>
+
+                        <li>Design and prototype a non personal, haptic foot interaction
+                            device </li>
+                        <li>Evaluate use in non accurate spatial desktop environment</li>
+                        <li>Evaluate foot based gestures using the same device</li>
+                        <li>Evaluate application of the device for UI manipulation</li>
+                        <li>Design and implement haptic UI elements</li>
+                        <li>Conduct an evaluation to deeply understand habituation and
+                            learning effect of these devices</li>
+                    </ol>
+                    <br>
+
+                </section>
+
+
+
+
+                <h1 class="f3-ns lh-title-ns mb0 lh-copy ">Research</h1>
+                <p class="lh-copy f5">
+                    The research process was divided into several stages, explained briefly here :
+                    <ol class="lh-copy">
+                        <li class="pb2">
+                            Literature Review: I tried to understand the state of the art in foot interactions,
+                            beginnings, models of understanding the field of
+                            tangible interactions, keywords, major researchers. I then worked on my personal map of the
+                            field which I used to position my work in the field after
+                            finding gaps in study and context.<br>
+                        </li>
+                        <li class="pb2">
+                            User Studies to understand peripheral usage: I recruited students in my university who
+                            worked extensively with hands especially the mouse. These were
+                            students in Geo information systems (maps and all), nano technology (chip design and all),
+                            and design. I observed how they used
+                            the computer in their work. The peripherals they used like mouse, track-pad,
+                            keyboard, and drawing tablets. I kept a note of things they did on each of these
+                            peripherals like scrolls, zooming, screen change etc. I kept a track of how many times they
+                            moved their gaze from the screen to search for the peripheral device. This could lead to
+                            loss of attention and reduced efficiency. I found that the main interactions were :
+                            <ul>
+                                <li>Scrolling</li>
+                                <li>Discrete Mouse clicks</li>
+                                <li>Text Entry (unstructured)</li>
+                                <li>Menu Navigation</li>
+                                <li>Drag and Drop gestures</li>
+                            </ul>
+                            I would hence focus on optimizing these interactions via a four limbed interaction model.
+                        </li>
+                        <li class="pb2">
+                            Non-participant observation for repetitive Tasks: This was one of the most interesting
+                            parts of the research. I received permission to observe the ticket sellers at busy
+                            Mumbai local trains. They used hands about 8 hours a day with just a 30 min break. They
+                            said that this repetitive tasks has impact on their hand health and they often complained
+                            of hand pain. I sat down in a corner and worked on
+                            understanding how they used the interface of the dated ticket vending system. These could be
+                            my extreme users.
+                        </li>
+
+
+
+                    </ol>
+                </p>
+                <p class="lh-copy f5">
+                    The goal of the initial research was to test waters for the foot interaction device. In the pilot,
+                    we found out that
+                    4/5 participants were enthusiastic in
+                    trying out a foot based device.
+                    Most (4/5) participants used multiple devices when interacting with the
+                    software of choice.Two participants complained of neck and back pain. However, they were
+                    not sure if foot based controls could be helpful. The felt they needed to
+                    stretch their legs and have freedom there, but a foot based device
+                    (intrinsic or mediated) might not allow that. One user felt that it may add
+                    to more effort as legs would now be engaged.
+                    <br>
+                    <br>
+
+                    The initial results may not have been very positive but at least there was hope. Sometimes a little
+                    hope is all you need to explore possible
+                    scenarios. I chose the approach of using prototypes to explore design situations. So, I started
+                    with ideation on possible foot interactions I could build based
+                    on my initial research.
+                </p>
+
+                <h1 class="f3-ns lh-title-ns mb0">The failed ideation stage</h1>
+                <p class="lh-copy f5">
+                    These ideations were based on the initial research. Now that I look at it from a learning point of
+                    view, I feel I learned more in
+                    these failures. This could have been omitted, but I feel, these failures helped me understand the
+                    scope better.
+                    <br>
+                    I used morphological charts to ideate on the possible options to make a mediated foot device.
+                    Mediated means, moved by the user like a pedal. They are easy to adapt to and not very radical. So,
+                    these ideations were
+                    such that users place their foot on the device to operate it. Some of them were actually very cool.
+                </p>
+
+
+            </div>
+        </div>
+        <div class="center mw9 mw7-ns ">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/rOPGKbc.png" class="w-100" alt="Photo of morphological chart">
+                Morphological chart of possible ways to think about mediated foot devices
+            </div>
+
+        </div>
+        <div class="center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns pt3">
+                    Based on these morphologies, I came up with 3 concepts in a group brainstorming session:
+                    <ul>
+                        <li>Doldrums</li>
+                        <li>Footscape</li>
+                        <li>Footmorph</li>
+                    </ul>
+                    They are explained below in brief with images.
+                </section>
+
+
+            </div>
+        </div>
+        <div class="center mw9 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/JDUYlEW.png" class="w-100" alt="Photo of Doldrums. Sketched by Vivek">
+                Doldrums are a set of bowl like devices that go under the user's feet.
+                They allow the user to perform actions by natural leg movements which
+                are assisted by the self balancing design of the concept.
+            </div>
+
+        </div>
+        <div class="center mw9 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6 pv4">
+                <img src="https://i.imgur.com/o5E12Og.png" class="w-100" alt="Photo of Footscape. Sketched by Vivek">
+                The device allows the user to rest his foot on a comfortable surface and
+                perform force based actions to zoom or pan. The device allows for a
+                location independent pedal action anywhere on the surface. The surface
+                is suspended on four weight sensors that help perform the interactions.
+            </div>
+
+        </div>
+        <div class="center mw9 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/nqGfdy1.png" class="w-100" alt="Photo of Footmorph. Sketched by Vivek">
+                Footmorf is a mat that allows the user to perform complex interactions
+                using force and motion of the foot. The shape is derived from
+                the absolute positions of the foot when rotated around the heel and toe. It has pressure
+                sensitive areas on the toe and heel, a pressure joystick to perform 2D
+                tasks and switches at extremities to perform less frequent tasks.
+            </div>
+
+        </div>
+        <div class="center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <p class="lh-copy f5-ns fl pv1 w-100-ns w-100">
+                    I used these concepts to get user feedback. This would be helpful to know what part of these could
+                    be prototyped. The users liked novelty of doll drums, the ergonomics of Footmorf, and the
+                    possibilities of interactions with footscape. I used Weighted Decision Matrix (WDM) to
+                    decide in on which of these concepts were worth prototyping and testing.
+                </p>
+                <h1 class="f4-ns lh-title-ns mb0">Concept Evaluation</h1>
+                <p class="lh-copy f5-ns fl pv1 w-100-ns w-100">
+                    The process of doing a WDM starts with a list of judgement criteria. These criteria in my case were
+                    sourced from research papers surveyed in the initial part
+                    of the project. These criteria were then made into a pair-wise map that helps in understanding the
+                    inter-dependency of these criteria and gives us the weight we
+                    use in a WDM. It was super hard to get this done at first. <br>
+                    <br>
+                    With the weights at hand, we put them into a WDM to get the scores for each of the concepts. This
+                    is shown in the images below.
+                </p>
+
+
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv1 f6">
+                <img src="https://i.imgur.com/oljfar5.png" class="w-100" alt="Photo of mockups">
+                A pairwise comparison chart
+                <br>
+            </div>
+
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv1 f6">
+                <img src="https://i.imgur.com/bZ0Vqge.png" class="w-100" alt="Photo of mockups">
+                A weighted decision matrix comparing the concepts from weights derived from the pairwise chart.
+                <br>
+            </div>
+
+        </div>
+
+
+
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    From the above analysis, it was clear that Footscape was "slightly" more useful to prototype
+                    compared
+                    to others. So, I followed the math and worked
+                    on prototyping the same.
+                    <h1 class="f4-ns lh-title-ns">Prototyping and Failure</h1>
+                    I went ahead and made a prototype of Footscape using Arduino and 4 pressure sensors that tracked
+                    the foot based on the relative pressure
+                    on them. The algorithm finds out a tilt and then drives the UI. In my case, I tested with Google
+                    Maps.
+
+                </section>
+
+
+            </div>
+        </div>
+
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/rySapjW.png" class="w-100" alt="Photo of mockups">
+                The second coolest foot interaction device : Footscape in action. Controlling a google maps view.
+                <br>
+            </div>
+        </div>
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    It was
+                    observed that the forces exerted by the users varied and device required
+                    frequent re-calibration. Each user varied the force exerted on the mat at
+                    different times for the same action. This made sensing the pressure
+                    changes difficult. <br>
+                    The major problem that
+                    was observed was that it was difficult to control force from the foot. The
+                    force exerted may depend on various things like weight, muscle strength
+                    and perception of feedback from the device. Continuous application of
+                    force is tiring. Users were more comfortable when they are allowed to
+                    move their feet the way they wish and only trigger an action when
+                    required in a comfortable pose. <br>
+                    <br>
+                    In short it was a failure on my part to make a modality that essentially sensed on force which is
+                    difficult to control rather than
+                    using motion and position that everyone uses (mouse). So, I had to restart by thinking into
+                    something that was : not mediated and used motion and position.
+                    Thankfully, this taught me a lot on design evaluation.
+                </section>
+
+
+            </div>
+        </div>
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <h1 class="f3-ns lh-title-ns mb0">Restart and FAND</h1>
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    We went back to the drawing board to rethink about the design and
+                    device. It seems that a mediated approach fails in the given context due to user’s need
+                    to not stay stuck to a particular active area. This is different from
+                    situations like a car, where user’s cannot relax. Hence, a contained
+                    interaction may add to user stress. It was also observed that several users
+                    tend to shake legs when working. This behavior needs to be contained in
+                    the design. This particular kind of situation is common to
+                    “solution-conjecture” design process. [Ref: <i>Designeraly ways of knowing &ndash; Nigel Cross</i>]
+
+                    <br>
+                    <br>
+                    The most feasible way to design such an interaction is to use "Gestures". Then I would prototype
+                    devices based on the designed gestures.
+                    But, How does one design
+                    gestures ?
+                    <br>
+                    <h1 class="f4-ns lh-title-ns mb">Guessability Study</h1>
+
+                    I conducted a <a href="https://dl.acm.org/citation.cfm?id=1518866" class="link dim light-purple">
+                        Wobbrock style</a> Guessability study to design gestures. The study essentially shows users
+                    some interactions cues on the screen.
+                    The users then perform these interactions as if they were causing it. I did it once using both feet
+                    and once using the dominant foot. Then we calculate how many users agree to a single interaction
+                    using agreement scores.
+                    The interaction cues were for scrolling, next-prev, command invocation, and zooming. These were the
+                    interactions we
+                    found out in the first part.
+
+                </section>
+
+
+            </div>
+        </div>
+
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/AfqMZQs.gif" class="w-100" alt="Photo of mockups">
+                A zoom-in/out interaction looks like this
+                <br>
+            </div>
+        </div>
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    Based on my users (8) the gesture set was as follows. One can obviously spot the similarities
+                    between these interactions
+                    and interactions performed by hands. Many users agreed that they performed the most natural
+                    interactions they could
+                    think of.
+
+                </section>
+
+
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/P87F5J1.png" class="w-100" alt="Photo of mockups">
+                The gestures to be designed into a physical device.
+                <br>
+            </div>
+        </div>
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    I followed a similar process as discussed earlier. I came up with three dominant concepts. They
+                    used things like surface wave acoustics to sense motion, a machine learning based concept
+                    that uses camera to sense foot geometry and a device that could be clipped to the foot. These
+                    concepts were then evaluated using WDM, with the time it would take to build
+                    considered. The device that could be clipped to the foot seemed most favorable to build and test.
+                    It was called FAND.
+
+                    <br>
+                    With the gesture set available the next process was to "bake" them into an ergonomic device. The
+                    device would calibrate with a user and then perform the
+                    learned interactions.
+
+                    <br> <br>
+                    But let us see how Hiren would use the FAND :
+
+                </section>
+
+
+            </div>
+        </div>
+
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/N2sgquh.png" class="w-100" alt="Photo of mockups">
+                Hiren and his context
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/W7SAryx.png" class="w-100" alt="Photo of mockups">
+                He discovers FAND.
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/v5pzbJk.png" class="w-100" alt="Photo of mockups">
+                He uses it.
+                <br>
+            </div>
+        </div>
+
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    <h1 class="f3-ns lh-title-ns">Prototyping</h1>
+                    A device was yet again made using Arduino and a motion sensor. The device would sense the users
+                    foot movements and learn (simple nursery-grade classification).
+                    These learnings would help the device predict the motion and in turn perform better interactions.
+                    It was difficult to get feedback on the Arduino prototype
+                    as people would be always talk more about the wires and all. So, I made form prototypes to help
+                    them visualize the device.
+                </section>
+
+
+            </div>
+        </div>
+
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/4nMvd5Q.png" class="w-100" alt="Photo of proto">
+                Wire balled prototype with an Arduino, proximity sensors, haptic motor and a 6 axis motion sensor.
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6 pv3">
+                <img src="https://i.imgur.com/CBCn5fF.png" class="w-100" alt="Photo of mockups">
+                Clip it to use it
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/BsnXmUn.png" class="w-100" alt="Photo of mockups">
+                A user testing it out on his foot.
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6 pv3">
+                <img src="https://i.imgur.com/sq0hIci.png" class="w-100" alt="Photo of mockups">
+                Possible Applications : Foot Presenter
+                <br>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/NCnytz8.png?1" class="w-100" alt="Photo of mockups">
+                Possible Applications : Pan Zoom with graphics/GIS/CAD softwares
+                <br>
+            </div>
+        </div>
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    <h1 class="f3-ns lh-title-ns">Evaluation</h1>
+                    With the device working consistently, I designed an experiment around the hypothesis :
+                    <br>
+                    <br>
+                    H<sub>0</sub> : There is no effect of foot modality on task performance <br>
+                    H<sub>1</sub> : A combined hand + foot modality positively affects task performance
+                    compared to only hand with comparable learning effects
+                    <br> <br>
+
+                </section>
+
+
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw8-ns">
+            <div class="fl w-50-ns w-100 gray center lh-copy mr3 f6">
+                <img src="https://i.imgur.com/KtM0Uwp.png" class="w-100" alt="Photo of mockups">
+                Experiment Design
+                <br>
+            </div>
+            <div class="fl w-50-ns w-100 gray center lh-copy pt3 f6">
+                <img src="https://i.imgur.com/geBhpJe.png" class="w-100" alt="Photo of mockups">
+                Tasks
+                <br>
+            </div>
+
+        </div>
+
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    The experiment design involved two groups (6 each) of users perform same set of tasks (Latin Square
+                    balanced) that make them use hand and feet together. One group was
+                    trained on a novel hand based input device (Thinkpad Pressure Pad) and another on FAND. The tasks
+                    were designed and programmed in Processing. The evaluation process is rather dense and a
+                    specialization of my school. It includes
+                    protocol design and task balancing methods. They have been skipped in
+                    this portfolio post. One can read these in my
+                    <a href="https://drive.google.com/file/d/1CH4XgkzvzWaVjZDxJgtrWlma4ZTeb1hH/view"
+                        class="link dim light-purple">
+                        report (page 49 onwards)</a>.
+                    <br> <br>
+                    I maintained evaluation sheets for each user for seven days of testing. The format is shown below.
+                    I used NASA TLX to measure task loads and other parameters
+                    shown below.
+                </section>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="center mw9 pb3 mw7-ns">
+            <div class="fl w-100 gray center lh-copy f6">
+                <img src="https://i.imgur.com/5Eb5kpN.png" class="w-100" alt="Photo of mockups">
+                Data sheet
+                <br>
+            </div>
+        </div>
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    <h1 class="f4-ns lh-title-ns">Results</h1>
+                    A repeated measure analysis of variance for the time taken to complete
+                    tasks yielded significant learnability for FAND ,F(4,20) = 6.04 , p <.05 as well as trackpoint,
+                        F(4,20)=5.63,p <.05. <br>Hence, both devices had similar learnability for the task “Format
+                        alike”.
+                        This task required users to use hand and foot together. The time taken to perform the tasks was
+                        lesser when using FAND with keyboard compared to a combination of trackpoint and keyboard.
+                </section>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+
+            <div class="fl w-100 gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/ZXHuyyW.png" class="w-100" alt="Photo of mockups">
+                TLX Score for the last task
+                <br>
+            </div>
+        </div>
+
+
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+
+                    The
+                    qualitative TLX scores seem to imply that task loads were higher for
+                    trackpoint compared to FAND. The FAND group experienced increased
+                    task load in the second session while it decreased consistently during the
+                    sessions. This may be due to the initial novelty effect. The average task
+                    load of the last session for FAND group
+                    was 3 (SD = 0.9) compared to 5.3 (SD = 2.4) for trackpoint
+                    group as shown.
+                </section>
+            </div>
+        </div>
+        <div class="center mw9 pb3 mw7-ns">
+
+            <div class="fl w-100 w-50-ns gray center lh-copy pv3 pr4 f6">
+                <img src="https://i.imgur.com/dXvQxwj.png" class="w-100" alt="Photo of mockups">
+                TLX Scores for each Trackpoint user per session
+                <br>
+            </div>
+            <div class="fl w-100 w-50-ns gray center lh-copy pv3 f6">
+                <img src="https://i.imgur.com/nTjL7lU.png" class="w-100" alt="Photo of mockups">
+                TLX Scores for each FAND user per session
+                <br>
+            </div>
+        </div>
+        <div class=" center mw9 mw7-ns ph6-ns">
+            <div class="fl w-100 mb3">
+                <section class="lh-copy f5-ns fl pt3 w-100-ns w-100">
+                    <h1 class="f3-ns lh-title-ns">Conclusion and Further information</h1>
+                    We proposed the design and evaluation of a gesture-based foot interface
+                    device. We identified suitable foot gestures for sitting pose by
+                    performing a guessability study. <br>
+                    We
+                    found that foot based modality seems to be a promising means for
+                    performing secondary interactions or sub-tasks. Users were able to
+                    perform some tasks faster with hand plus foot modality compared to
+                    hand the only modality. We observed that the task load perceived by
+                    users was lesser when using a combination of hand and foot modality
+                    compared to a hand modality. <br>
+                    Possibilities of using
+                    such a device in mobile, Virtual Reality (VR),
+                    Walking in place (WIP), and other hand busy domains could also be
+                    explored. We hope to work on designing UI elements and on-screen
+                    interactions that support the use of combined hand and foot modalities. <br><br>
+                    A paper on this project was accepted and presented at <a href="http://www.segah.org/2018/"
+                        class="link dim light-purple">SeGAH
+                        2018, Austria </a> . It is published in <a
+                        href="https://ieeexplore.ieee.org/abstract/document/8401321" class="link dim light-purple">
+                        IEEE Explore</a>. If this has
+                    piqued your interest, maybe you can read a longer report <a
+                        href="https://drive.google.com/file/d/1CH4XgkzvzWaVjZDxJgtrWlma4ZTeb1hH/view"
+                        class="link dim light-purple">
+                        here</a>.
+                </section>
+            </div>
+        </div>
+
+
+
+        <!-- Dont touch below this -->
+        <div class="f4-ns f5 fl w-100 pv4-ns pv2  bt bw0-ns bw1">
+            <div class="mt5-ns pt1 fl w-20-ns w-100 bt-ns bw1 lh-title pt2-ns pb2 fw2 tracked "><a
+                    href="connectnext.html" class="link dim black">
+                    CONNECTNeXT</a> </div>
+            <div class="mt5-ns fl w-20-ns w-100 bt-ns bw1 lh-title pt2-ns pb2 fw2 tracked"><a href="paisa.html"
+                    class="link dim black">
+                    PAISA STICK
+            </div>
+            <div class="mt5-ns fl w-20-ns w-100 bt-ns bw1 lh-title pt2-ns pb2 fw2 tracked "><a href="pinchphone.html"
+                    class="link dim black">
+                    PINCHPHONE </div>
+            <div class="mt5-ns fl w-20-ns w-100 bt-ns bw1 lh-title pt2-ns pb2 fw2 tracked"><a
+                    href="http://rohitg.in/2014/04/01/Solaris/" class="link dim black">
+                    SOLAR
+                    CAR </div>
+            <div class="mt5-ns fl w-20-ns w-100 bt-ns bw1 lh-title pt2-ns pb2-ns  fw2 tracked"> <a
+                    href="../otherProjects.html" class="link dim black">OTHER
+                    PROJECTS </a> </div>
+            <div class="fl w-100 f6 p
+mv5-ns mv2 bt bw1 pt2 lh-copy"> Made by Rohit using Tachyons, Vuejs, and
+                <span class="i">some
+                    "Pipas
+                    con
+                    café".</span> Check out the <a href="../colo.html"
+                    class="link black hover-bg-light-purple">Colophon</a>
+                to know more.
+            </div>
+
+        </div>
+
+
+
+
+
+    </article>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55965373-5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-55965373-5');
+    </script>
+
+</body>
+
+</html>

@@ -29,13 +29,13 @@
                     <!-- 
                     <span class="fw1-ns tracked hide">01</span>  -->
                     About </a></div>
-            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="index.html#works"
-                    class="link dim black">
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl-ns tr lh-title-ns w-20-m"><a
+                    href="index.html#works" class="link dim black">
                     <!-- <span
                         class="fw1-ns tracked hide">02</span>  -->
                     Projects </a></div>
-            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl lh-title-ns w-20-m"><a href="http://rohitg.in/"
-                    class="link dim black" target="_blank">
+            <div class="f5-ns f6 mw9 bt bw1 pb4 pt1 fl w-10-ns w-20 tl-ns tr lh-title-ns w-20-m"><a
+                    href="http://rohitg.in/" class="link dim black" target="_blank">
                     <!-- <span class="fw1-ns tracked hide">03</span> -->
 
                     Blog </a></div>
@@ -52,7 +52,7 @@
 
 
         <div class="fl w-100 mb3 pb4-ns">
-            <h1 class="f2-ns f3 mt0 pt2">Design</h1>
+            <h1 class="f2-ns f3 mt0 pt2">Design & Code</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2" v-for="project in design">
                 <a :href="project.postURL" class="link dim black">
                     <div class="aspect-ratio aspect-ratio--4x3 mb2">
@@ -67,7 +67,7 @@
 
         </div>
         <div class="mw9 fl w-100 mb3 bt pb4-ns">
-            <h1 class="f2-ns f3 mt0-ns mt0 pt2">Creative Technology and Installations</h1>
+            <h1 class="f2-ns f3 mt0-ns mt0 pt2">Creative Technology and Mix Media</h1>
             <div class="fl w-third-ns w-100 pr4-ns gray f6 lh-copy pv2-ns pv2" v-for="project in creative">
                 <a :href="project.postURL" class="link dim black">
                     <div class="aspect-ratio aspect-ratio--4x3 mb2">
@@ -137,11 +137,7 @@
         el: '#app',
         data: {
             design: [{
-                    title: "Automotive Acoustic Strategy",
-                    imgURL: "https://i.imgur.com/nLyUr3Y.jpg",
-                    postURL: "http://rohitg.in/2015/04/01/TMLAcoustics/"
-                }, {
-                    title: "Spatial visualization of Indian Railways network",
+                    title: "Where do most trains come from in India?",
                     imgURL: "https://i.imgur.com/5nMTnGP.png",
                     postURL: "http://rohitg.in/2017/09/10/DataViz/"
                 },
@@ -152,38 +148,58 @@
                 },
 
                 {
-                    title: "Local - Gamification in participatory GIS",
+                    title: "Local - Location games and community good",
                     imgURL: "https://i.imgur.com/5Dhk5Kf.png",
                     postURL: "http://rohitg.in/2017/06/03/local/"
                 },
                 {
-                    title: "Design Fictions : Beauty as a service",
+                    title: "What if beauty could be bought ?",
                     imgURL: "https://i.imgur.com/667g4d4.png",
                     postURL: "http://rohitg.in/2017/04/03/designfiction/"
                 },
                 {
-                    title: "Understanding Bamboo Handicrafts through participatory research",
+                    title: "Bamboo Handicrafts, Tribal communities, and design ",
                     imgURL: "https://c1.staticflickr.com/4/3856/33680243686_71f538de17.jpg",
                     postURL: "http://rohitg.in/2017/04/01/bamboo/"
                 },
                 {
-                    title: "Improving urban lived experience through chat-bots ",
+                    title: "The city as a chatbot",
                     imgURL: "https://i.imgur.com/4frDcLE.png",
                     postURL: "http://rohitg.in/2017/04/03/CityBot/"
-                }
+                }, {
+                    title: "How can we make our cars sound better?",
+                    imgURL: "https://i.imgur.com/nLyUr3Y.jpg",
+                    postURL: "http://rohitg.in/2015/04/01/TMLAcoustics/"
+                },
+                // {
+                //     title: "Deflexor: Designing with the future",
+                //     imgURL: "https://i.imgur.com/nLyUr3Y.jpg",
+                //     postURL: "http://rohitg.in/2015/04/01/TMLAcoustics/"
+                // },
+                // {
+                //     title: "Acora : Connecting Orange Creatives",
+                //     imgURL: "https://i.imgur.com/nLyUr3Y.jpg",
+                //     postURL: "http://rohitg.in/2015/04/01/TMLAcoustics/"
+                // },
+                {
+                    title: "Where can I go on an exchange as an IED student? ",
+                    imgURL: "https://i.imgur.com/t5CIsCv.png",
+                    postURL: "./works/IEDNw.html"
+                },
+
             ],
             creative: [{
-                    title: "Points of View",
+                    title: "Points of View- Explore the world as a fish, dog, and bird",
                     imgURL: "https://farm1.staticflickr.com/840/29592750548_0d7a04270d_z.jpg",
                     postURL: "http://rohitg.in/2018/05/02/PointsOfView/"
                 },
                 {
-                    title: "Day and Night",
+                    title: "Day and Night - Owls are sleeping",
                     imgURL: "https://i.imgur.com/iOqCe3C.png",
                     postURL: "http://rohitg.in/2018/05/01/DayNight/"
                 },
                 {
-                    title: "Who you are is what you get",
+                    title: "On the subjectivity of internet search",
                     imgURL: "https://i.imgur.com/N5ErrCV.jpg",
                     postURL: "http://rohitg.in/2017/09/03/whowe/"
                 },
@@ -191,7 +207,41 @@
                     title: "Men and Three Worlds",
                     imgURL: "https://c1.staticflickr.com/1/436/32850126965_681d9b81e9.jpg",
                     postURL: "http://rohitg.in/2017/02/12/InstallationReality/"
-                }
+                },
+                {
+                    title: "Innocent Interpretations",
+                    imgURL: "https://i.imgur.com/wuYmxrk.jpg",
+                    postURL: "./works/innocent.html"
+                },
+                // {
+                //     title: "Dataganisms",
+                //     imgURL: "https://c1.staticflickr.com/1/436/32850126965_681d9b81e9.jpg",
+                //     postURL: "./works/dataganisms.html"
+                // },
+                {
+                    title: "Know Your Wall : Visualizing equal opportunity",
+                    imgURL: "https://i.imgur.com/YLrvT8W.png",
+                    postURL: "./works/knowWall.html"
+                },
+                // {
+                //     title: "Generative Voids",
+                //     imgURL: "https://c1.staticflickr.com/1/436/32850126965_681d9b81e9.jpg",
+                //     postURL: "./works/generative.html"
+                // },
+                // {
+                //     title: "WhatIf Art",
+                //     imgURL: "https://i.imgur.com/UNAeFvl.jpg",
+                //     postURL: "./works/whatIf.html"
+                // },
+                // {
+                // title: "Threads",
+                // imgURL: "https://c1.staticflickr.com/1/436/32850126965_681d9b81e9.jpg",
+                // postURL: "http://rohitg.in/2017/02/12/InstallationReality/"
+                // },
+
+
+
+
             ],
             physical: [{
                     title: "Indian Solar Car Project for World Solar Challenge, Australia",

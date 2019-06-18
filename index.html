@@ -13,6 +13,36 @@
                 display: none;
             }
         }
+
+        .ul1 {
+
+            /* /background-image: linear-gradient(to right, #4568dc, #b06ab3); */
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: #3A1C71;
+            /* fallback for old browsers */
+            background: linear-gradient(270deg, #0000ff 0%, #aa235e 100%);
+            /* Chrome 10-25, Safari 5.1-6 */
+
+
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ul2 {
+
+            /* /background-image: linear-gradient(to right, #4568dc, #b06ab3); */
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: #3A1C71;
+            /* fallback for old browsers */
+            background: linear-gradient(270deg, #aa235e 0%, #ff0000 100%);
+            /* Chrome 10-25, Safari 5.1-6 */
+
+
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
     <title>Hello ! </title>
 </head>
@@ -43,13 +73,13 @@
         </section>
         <br>
         <h1 class="lh-title  f-subheadline-ns f2 mt6-ns mt5">
-            <span>{{greeting}}</span> I am a designer and an engineer. I like to build things
-            for creative enquiry with a
-            research
-            focus.
+            <span>{{greeting}}</span> I am a <span class="ul1">designer</span> and an <span class="ul2">engineer</span>.
+            I
+            like to build things
+            for creative enquiry.
         </h1>
         <a name="work"></a>
-        <div class=" f3 mw9 mt5 bt lh-title pt2 pb2 fw4  tracked "> SELECTED PROJECTS </div>
+        <div class=" f3 mw9 mt5-ns mt3 bt lh-title pt2 pb2 fw4  tracked "> SELECTED PROJECTS </div>
         <!-- <p class="lh-copy mw9">
             Projects showing multidisciplinary, research-focussed approach to addressing design opportunities. I use my
             skills in
@@ -103,7 +133,7 @@
         <div class=" f4-ns f5 bb bw0 lh-title pb2 fw2 tracked tr-ns tl"> <a href="about.html"
                 class="link dim black">ABOUT</a>
         </div>
-        <div class=" f6 pb5 bt bw1 pt2 lh-copy"> Made by Rohit using Tachyons, Vuejs, and <span class="i">some "Pipas
+        <div class=" f6 pb5 bt bw1 pt2 lh-copy"> Made by me using Tachyons, Vuejs, and <span class="i">some "Pipas
                 con
                 café".</span> Check out the <a href="colo.html" class="link black hover-bg-light-purple">Colophon</a>
             to know more. I am looking for jobs and opportunities. Please get in touch 🙏.

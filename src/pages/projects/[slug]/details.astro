@@ -1,0 +1,61 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Lightbox from '../../../components/Lightbox.astro';
+import Prose from '../../../components/Prose.tsx';
+import { reader } from '../../../lib/reader';
+
+export async function getStaticPaths() {
+  const caseStudies = await reader.collections.caseStudies.all();
+  const paths = [];
+  for (const c of caseStudies) {
+    if (!c.entry.project) continue;
+    const project = await reader.collections.projects.read(c.entry.project);
+    if (!project) continue;
+    paths.push({
+      params: { slug: c.entry.project },
+      props: { caseSlug: c.slug, projectTitle: project.title },
+    });
+  }
+  return paths;
+}
+
+const { caseSlug, projectTitle } = Astro.props;
+const { slug } = Astro.params;
+const study = await reader.collections.caseStudies.read(caseSlug);
+if (!study) return Astro.redirect(`/projects/${slug}`);
+const content = await study.content();
+---
+
+<Base title={`${projectTitle} — detailed write-up`}>
+  <article class="wrap project">
+    <header class="project__head rule">
+      <p class="eyebrow">
+        <a href={`/projects/${slug}`} class="link-underline">{projectTitle}</a> · detailed write-up
+      </p>
+    </header>
+    <div class="project__body measure-body">
+      <Prose document={content} />
+    </div>
+    <p class="back rule">
+      <a href={`/projects/${slug}`} class="link-underline">← Back to {projectTitle}</a>
+    </p>
+  </article>
+  <Lightbox />
+</Base>
+
+<style>
+  .project {
+    padding-top: clamp(1.5rem, 5vw, 3rem);
+  }
+  .project__head {
+    padding-top: 0.75rem;
+    margin-bottom: clamp(1.5rem, 5vw, 3rem);
+  }
+  .measure-body {
+    max-width: 42rem;
+  }
+  .back {
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+</style>

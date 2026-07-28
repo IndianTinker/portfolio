@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+import MediaList from '../../components/MediaList.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import Prose from '../../components/Prose.tsx';
+import { reader } from '../../lib/reader';
+
+export async function getStaticPaths() {
+  const projects = await reader.collections.projects.all();
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const entry = await reader.collections.projects.read(slug!);
+if (!entry) return Astro.redirect('/projects');
+
+const body = await entry.body();
+const awards = entry.awards ?? [];
+
+// A detailed write-up lives in the caseStudies collection, linked by project.
+const caseStudies = await reader.collections.caseStudies.all();
+const hasDetails = caseStudies.some((c) => c.entry.project === slug);
+---
+
+<Base title={`${entry.title} — Rohit Gupta`} description={entry.summary ?? undefined}>
+  <article class="wrap project">
+    <header class="project__head">
+      <p class="eyebrow">{[entry.category, entry.year].filter(Boolean).join(' · ')}</p>
+      <h1 class="project__title">{entry.title}</h1>
+      {entry.summary && <p class="project__summary measure">{entry.summary}</p>}
+    </header>
+
+    {entry.media.length > 0 && <MediaList media={entry.media} />}
+
+    <div class="project__body measure-body">
+      <Prose document={body} />
+    </div>
+
+    {
+      awards.length > 0 && (
+        <section class="awards rule-faint">
+          <h2 class="eyebrow">Awards</h2>
+          <ul class="awards__list">
+            {awards.map((a) =>
+              a.url ? (
+                <li>
+                  <a href={a.url} target="_blank" rel="noopener" class="link-underline">
+                    {a.label}
+                  </a>
+                </li>
+              ) : (
+                <li>{a.label}</li>
+              )
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      hasDetails && (
+        <p class="details-link rule-faint">
+          <a href={`/projects/${slug}/details`} class="link-underline">
+            Read the detailed write-up →
+          </a>
+        </p>
+      )
+    }
+
+    <p class="back rule">
+      <a href="/projects" class="link-underline">← All projects</a>
+    </p>
+  </article>
+  <Lightbox />
+</Base>
+
+<style>
+  .project {
+    padding-top: clamp(1.5rem, 5vw, 3rem);
+  }
+  .project__head {
+    margin-bottom: clamp(1.5rem, 5vw, 3rem);
+  }
+  .project__title {
+    font-size: var(--step-3);
+    line-height: 1.08;
+    margin: 0.4rem 0 1rem;
+  }
+  .project__summary {
+    font-size: var(--step-1);
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .project__body {
+    margin-top: clamp(2rem, 6vw, 4rem);
+  }
+  .measure-body {
+    max-width: 42rem;
+  }
+  .awards {
+    margin-top: clamp(2rem, 6vw, 4rem);
+    padding-top: 1rem;
+  }
+  .awards__list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-width: var(--measure);
+  }
+  .details-link,
+  .back {
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+</style>

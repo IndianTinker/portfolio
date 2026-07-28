@@ -1,0 +1,134 @@
+---
+// A single lightbox instance. Listens for clicks on [data-lightbox] triggers
+// anywhere on the page. Dark, blurred backdrop.
+---
+
+<div class="lb" id="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true">
+  <button class="lb__close" aria-label="Close">×</button>
+  <div class="lb__stage"></div>
+  <p class="lb__caption"></p>
+</div>
+
+<style>
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 5vw, 4rem);
+    background: rgba(8, 8, 8, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .lb.is-open {
+    opacity: 1;
+  }
+  .lb__stage {
+    max-width: min(100%, 1200px);
+    max-height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .lb__stage :global(img) {
+    max-width: 100%;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+  }
+  .lb__stage :global(.lb__iframe) {
+    width: min(90vw, 1100px);
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+  .lb__caption {
+    position: absolute;
+    bottom: clamp(0.8rem, 3vw, 2rem);
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: var(--step--1);
+    margin: 0;
+    padding-inline: 1rem;
+  }
+  .lb__close {
+    position: absolute;
+    top: clamp(0.5rem, 2vw, 1.5rem);
+    right: clamp(0.5rem, 2vw, 1.5rem);
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  .lb__close:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const lb = document.getElementById('lightbox')!;
+  const stage = lb.querySelector('.lb__stage') as HTMLElement;
+  const captionEl = lb.querySelector('.lb__caption') as HTMLElement;
+  const closeBtn = lb.querySelector('.lb__close') as HTMLElement;
+
+  function open(kind: string, src: string, caption: string) {
+    stage.innerHTML = '';
+    if (kind === 'video') {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'lb__iframe';
+      iframe.src = src;
+      iframe.allow =
+        'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      stage.appendChild(iframe);
+    } else {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = caption || '';
+      stage.appendChild(img);
+    }
+    captionEl.textContent = caption || '';
+    lb.hidden = false;
+    lb.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => lb.classList.add('is-open'));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      lb.hidden = true;
+      stage.innerHTML = ''; // stops video playback
+    }, 200);
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as HTMLElement).closest('[data-lightbox]');
+    if (trigger) {
+      e.preventDefault();
+      open(
+        trigger.getAttribute('data-lightbox') || 'image',
+        trigger.getAttribute('data-src') || '',
+        trigger.getAttribute('data-caption') || ''
+      );
+    }
+  });
+
+  closeBtn.addEventListener('click', close);
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb || e.target === stage) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lb.hidden) close();
+  });
+</script>

@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { reader } from '../lib/reader';
+import { getProjects } from '../lib/projects';
+
+const home = await reader.singletons.home.read();
+const greeting = home?.greeting ?? 'Hello!';
+const intro =
+  home?.intro ??
+  'I am a designer and an engineer. I like to build things for creative enquiry.';
+
+const projects = await getProjects();
+const featured = projects.filter((p) => p.entry.featured);
+const shown = featured.length ? featured : projects.slice(0, 6);
+---
+
+<Base>
+  <section class="hero wrap">
+    <h1 class="hero__title">{greeting} {intro}</h1>
+  </section>
+
+  <section class="wrap">
+    <h2 class="section-head rule eyebrow">Selected Projects</h2>
+    <div class="list">
+      {shown.map((project) => <ProjectCard project={project} />)}
+    </div>
+
+    <div class="more rule">
+      <a href="/projects" class="more__link">All projects →</a>
+      <a href="/about" class="more__link">About →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-top: clamp(3rem, 9vw, 7rem);
+    padding-bottom: clamp(3.5rem, 10vw, 8rem);
+  }
+  .hero__title {
+    font-size: clamp(2.1rem, 1.2rem + 3.4vw, 4rem);
+    line-height: 1.14;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: none;
+  }
+  .section-head {
+    padding-top: 0.75rem;
+    margin: 0 0 1rem;
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .more {
+    display: flex;
+    gap: 2rem;
+    margin-top: clamp(2rem, 6vw, 4rem);
+    padding-top: 1rem;
+  }
+  .more__link {
+    font-size: var(--step-1);
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+  .more__link:hover {
+    color: var(--ink);
+  }
+</style>

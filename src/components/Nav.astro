@@ -1,0 +1,55 @@
+---
+const { pathname } = Astro.url;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<nav class="nav wrap">
+  <a href="/" class="nav__brand">Rohit Gupta</a>
+  <div class="nav__links">
+    <a href="/about" class:list={['nav__link', { 'is-active': isActive('/about') }]}>About</a>
+    <a href="/projects" class:list={['nav__link', { 'is-active': isActive('/projects') }]}>Projects</a>
+    <a href="https://rohitg.in/" target="_blank" rel="noopener" class="nav__link">Blog</a>
+  </div>
+</nav>
+
+<style>
+  /* One continuous hairline across the whole bar, echoing the original —
+     the rule lives on the container, not on each item. */
+  .nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem; /* space above the rule — the original article's pa4 */
+    border-top: 2px solid var(--line-strong); /* bw1 = 2px */
+    padding-top: 0.25rem; /* pt1 */
+    padding-bottom: 2rem; /* 32px — room between the bar and page content */
+  }
+  .nav__brand {
+    font-weight: 700;
+    font-size: 1rem; /* f5 (mobile) */
+  }
+  .nav__links {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2.5rem);
+  }
+  .nav__link {
+    font-size: 0.875rem; /* f6 (mobile) */
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    transition: color 0.15s ease;
+  }
+  @media (min-width: 30em) {
+    .nav__brand {
+      font-size: 1.5rem; /* f3-ns */
+    }
+    .nav__link {
+      font-size: 1rem; /* f5-ns */
+    }
+  }
+  .nav__link:hover,
+  .nav__link.is-active {
+    color: var(--ink);
+  }
+</style>

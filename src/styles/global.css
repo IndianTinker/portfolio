@@ -1,0 +1,178 @@
+/* ------------------------------------------------------------------ *
+ * Rohit Gupta — portfolio design system
+ * Swiss International Style, black & white. Grid, grotesque-neutral
+ * system type, opacity hierarchy, hairline rules, rectilinear forms.
+ * Hierarchy comes from OPACITY, never a second hue.
+ * ------------------------------------------------------------------ */
+
+:root {
+  /* One ink, expressed at four opacities. No accent hue. */
+  --ink: #111111;
+  --ink-70: rgba(17, 17, 17, 0.68); /* secondary text, labels */
+  --ink-40: rgba(17, 17, 17, 0.42); /* tertiary, captions */
+  --ink-20: rgba(17, 17, 17, 0.2); /* ghosted, disabled */
+  --ink-soft: var(--ink-70);
+  --ink-faint: var(--ink-40);
+
+  --paper: #ffffff;
+  --surface: #eeeeee; /* Tachyons light-gray */
+  --line: #e2e2e2; /* hairline border */
+  --line-strong: #111111; /* structural rule */
+
+  /* Colours from the original site. */
+  --accent: #aa235e; /* magenta, from the gradient */
+  --accent-2: #0000ff; /* blue */
+  --link: #a463f2; /* Tachyons light-purple — rich-text links */
+
+  --max: 72rem;
+  --measure: 38rem;
+
+  --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.2rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3.4rem);
+  --step-4: clamp(2.6rem, 1.9rem + 3.4vw, 5rem);
+
+  /* 8px base unit */
+  --space: clamp(1rem, 0.8rem + 1vw, 1.6rem);
+  --gutter: clamp(1.4rem, 1rem + 2.5vw, 4rem);
+
+  /* The original site used Tachyons `system-sans-serif`, i.e. the browser's
+     default sans — not the -apple-system UI stack. Keep it that way. */
+  --font-sans: sans-serif;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Swiss typography: light display, normal headings, never bold.
+   text-wrap: balance keeps headline widows off. */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Hairline rules — the Swiss grid made visible. */
+.rule {
+  border-top: 1px solid var(--line-strong);
+}
+.rule-faint {
+  border-top: 1px solid var(--line);
+}
+
+/* Caption / label: small, uppercase, tracked — the Swiss kicker. */
+.eyebrow {
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+  font-weight: 500;
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* Tabular figures for any aligned numeric column. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--line);
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+.link-underline:hover {
+  text-decoration-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Rich-text (Keystatic) links, everywhere Prose renders — the original's
+   `link dim light-purple`: purple, no underline, dims on hover. */
+.prose a {
+  color: var(--link);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+.prose a:hover {
+  opacity: 0.5;
+}
+
+/* Keyboard focus — visible, rectilinear, ink. */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Visually-hidden utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

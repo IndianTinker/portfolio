@@ -1,0 +1,117 @@
+---
+import { parseVideo } from '../lib/video';
+
+interface MediaItem {
+  discriminant: 'image' | 'imageUrl' | 'video';
+  value: { src: string; caption?: string };
+}
+interface Props {
+  media: MediaItem[];
+}
+const { media } = Astro.props;
+---
+
+<div class="media">
+  {
+    media.map((item) => {
+      const caption = item.value.caption;
+      if (item.discriminant === 'image' || item.discriminant === 'imageUrl') {
+        return (
+          <figure class="media__item">
+            <button
+              class="media__trigger"
+              data-lightbox="image"
+              data-src={item.value.src}
+              data-caption={caption ?? ''}
+              aria-label={caption ? `Enlarge: ${caption}` : 'Enlarge image'}
+            >
+              <img src={item.value.src} alt={caption ?? ''} loading="lazy" />
+            </button>
+            {caption && <figcaption>{caption}</figcaption>}
+          </figure>
+        );
+      }
+      // video
+      const v = parseVideo(item.value.src);
+      return (
+        <figure class="media__item">
+          <button
+            class="media__trigger media__video"
+            data-lightbox="video"
+            data-src={v.embedUrl}
+            data-caption={caption ?? ''}
+            aria-label={caption ? `Play video: ${caption}` : 'Play video'}
+          >
+            {v.thumb ? (
+              <img src={v.thumb} alt={caption ?? ''} loading="lazy" />
+            ) : (
+              <span class="media__video-poster" />
+            )}
+            <span class="media__play" aria-hidden="true">▶</span>
+          </button>
+          {caption && <figcaption>{caption}</figcaption>}
+        </figure>
+      );
+    })
+  }
+</div>
+
+<style>
+  .media {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .media__item {
+    margin: 0;
+  }
+  .media__trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: var(--surface);
+    cursor: zoom-in;
+    position: relative;
+    overflow: hidden;
+  }
+  .media__trigger img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.2s ease;
+  }
+  .media__trigger:hover img {
+    opacity: 0.92;
+  }
+  .media__video {
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+    background: #111;
+  }
+  .media__video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+  }
+  .media__video-poster {
+    position: absolute;
+    inset: 0;
+    background: #111;
+  }
+  .media__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  }
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+</style>

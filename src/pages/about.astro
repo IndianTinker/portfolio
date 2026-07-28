@@ -1,0 +1,306 @@
+---
+import Base from '../layouts/Base.astro';
+import Prose from '../components/Prose.tsx';
+import { reader } from '../lib/reader';
+
+const about = await reader.singletons.about.read();
+const bio = about ? await about.bio() : [];
+const present = about?.present ?? '';
+const presentLinks = about?.presentLinks ?? [];
+
+const photo =
+  about?.photo?.discriminant === 'image'
+    ? about.photo.value
+    : about?.photo?.discriminant === 'imageUrl'
+      ? about.photo.value
+      : null;
+
+const experience = about?.experience ?? [];
+const education = about?.education ?? [];
+const exhibitions = about?.exhibitions ?? [];
+const publications = about?.publications ?? [];
+const awards = about?.awards ?? [];
+const interests = about?.interests ?? [];
+const links = about?.links ?? [];
+---
+
+<Base title="About — Rohit Gupta">
+  <section class="wrap about">
+    <div class="about__top">
+      <div class="about__bio">
+        <h1 class="about__title">About</h1>
+        <div class="prose-wrap"><Prose document={bio} /></div>
+
+        {
+          links.length > 0 && (
+            <div class="contact rule-faint">
+              <h2 class="label">Contact</h2>
+              <ul class="contact__list">
+                {links.map((l) => (
+                  <li>
+                    <a href={l.url ?? '#'} target="_blank" rel="noopener" class="link-underline">
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          present && (
+            <div class="present rule-faint">
+              <h2 class="label">Present</h2>
+              <p class="present__text measure">{present}</p>
+              {presentLinks.length > 0 && (
+                <ul class="present__links">
+                  {presentLinks.map((l) => (
+                    <li>
+                      <a href={l.url ?? '#'} target="_blank" rel="noopener" class="tag">
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )
+        }
+      </div>
+
+      {
+        photo && (
+          <div class="about__photo">
+            <img src={photo} alt="Rohit Gupta" />
+          </div>
+        )
+      }
+    </div>
+
+    <div class="cols cols--3">
+      {
+        experience.length > 0 && (
+          <section class="col rule">
+            <h2 class="label">Experience</h2>
+            {experience.map((e) => (
+              <div class="entry">
+                <p class="entry__period">{e.period}</p>
+                <p class="entry__role">{e.role}</p>
+                {e.detail && <p class="entry__detail">{e.detail}</p>}
+              </div>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        education.length > 0 && (
+          <section class="col rule">
+            <h2 class="label">Education</h2>
+            {education.map((e) => (
+              <div class="entry">
+                <p class="entry__period">{e.period}</p>
+                {e.detail && <p class="entry__detail">{e.detail}</p>}
+              </div>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        exhibitions.length > 0 && (
+          <section class="col rule">
+            <h2 class="label">Exhibitions &amp; talks</h2>
+            <ul class="plain">
+              {exhibitions.map((e) => (
+                <li>
+                  <span class="b">{e.year}</span> — {e.detail}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+
+    <div class="cols cols--2">
+      {
+        publications.length > 0 && (
+          <section class="col rule">
+            <h2 class="label">Publications</h2>
+            <ul class="plain">
+              {publications.map((p) => (
+                <li>{p.detail}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
+        awards.length > 0 && (
+          <section class="col rule">
+            <h2 class="label">Awards</h2>
+            <ul class="plain">
+              {awards.map((a) => (
+                <li>
+                  <span class="b">{a.year}</span> — {a.detail}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+
+    {
+      interests.length > 0 && (
+        <section class="col rule interests-full">
+          <h2 class="label">Interests</h2>
+            {interests.map((i) => (
+              <div class="entry">
+                <p class="entry__role">{i.heading}</p>
+                {i.detail && <p class="entry__detail">{i.detail}</p>}
+              </div>
+            ))}
+          </section>
+        )
+      }
+  </section>
+</Base>
+
+<style>
+  .about {
+    padding-top: 2rem; /* 32px above the page title */
+  }
+  .label {
+    font-size: 1rem;
+    letter-spacing: 0.1em; /* tracked */
+    text-transform: uppercase;
+    font-weight: 400; /* fw4 */
+    color: var(--ink); /* black, not grey */
+    margin: 0 0 0.5rem;
+  }
+  .about__top {
+    display: grid;
+    gap: clamp(1.5rem, 5vw, 3rem);
+  }
+  @media (min-width: 48rem) {
+    .about__top {
+      grid-template-columns: 1fr 1fr; /* 50/50 */
+    }
+  }
+  /* Bio copy — lh-copy (1.5), f5 (1rem), measure-wide (~34em). */
+  .prose-wrap {
+    max-width: 34em;
+  }
+  .prose-wrap :global(.prose) {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .about__title {
+    font-size: 1.5rem; /* f3 (mobile) */
+    line-height: 1.25;
+    margin: 0 0 1.5rem;
+  }
+  @media (min-width: 30em) {
+    .about__title {
+      font-size: 5rem; /* f-subheadline-ns */
+    }
+  }
+  .about__photo img {
+    width: 100%;
+    height: auto;
+  }
+  .contact,
+  .present {
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+  .present__text {
+    margin: 0.75rem 0;
+  }
+  .present__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tag {
+    display: inline-block;
+    padding: 0.1rem 0.6rem;
+    background: var(--surface);
+    border-radius: 999px;
+    font-size: var(--step--1);
+    color: var(--link);
+    transition: opacity 0.15s ease;
+  }
+  .tag:hover {
+    opacity: 0.6;
+  }
+  .contact__list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  .cols {
+    display: grid;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 4rem);
+  }
+  @media (min-width: 48rem) {
+    .cols--3 {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: clamp(1.5rem, 4vw, 3rem);
+    }
+    .cols--2 {
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(1.5rem, 5vw, 4rem);
+    }
+  }
+  .interests-full {
+    margin-top: clamp(2rem, 6vw, 4rem);
+  }
+  .col {
+    padding-top: 0.5rem;
+  }
+  .entry {
+    margin-bottom: 1.25rem;
+    font-size: 1rem; /* f5 */
+    line-height: 1.5; /* lh-copy */
+  }
+  .entry p {
+    margin: 0;
+  }
+  .entry__period {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .entry__role {
+    font-weight: 600;
+  }
+  .entry__detail {
+    color: var(--ink);
+  }
+  .plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem; /* f5 */
+  }
+  .plain li {
+    margin-bottom: 0.85rem;
+    line-height: 1.5; /* lh-copy */
+  }
+  .b {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Rich-text link styling now lives globally in `.prose a`. */
+</style>

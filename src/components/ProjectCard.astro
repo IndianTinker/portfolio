@@ -1,0 +1,87 @@
+---
+import { coverThumb, type ProjectEntry } from '../lib/projects';
+
+interface Props {
+  project: ProjectEntry;
+}
+const { project } = Astro.props;
+const { slug, entry } = project;
+const thumb = coverThumb(entry.media);
+---
+
+<a href={`/projects/${slug}`} class="card">
+  <div class="card__text">
+    <h3 class="card__title">{entry.title}</h3>
+    {
+      (entry.category || entry.year) && (
+        <p class="eyebrow card__meta">
+          {[entry.category, entry.year].filter(Boolean).join(' · ')}
+        </p>
+      )
+    }
+    {entry.summary && <p class="card__summary measure">{entry.summary}</p>}
+  </div>
+  <div class="card__media">
+    {thumb ? <img src={thumb} alt={entry.title} loading="lazy" /> : <span class="card__ph" />}
+  </div>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 40rem) {
+    .card {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: start;
+    }
+  }
+  .card__title {
+    font-size: var(--step-2);
+    line-height: 1.1;
+    margin: 0 0 0.5rem;
+    transition: color 0.15s ease;
+  }
+  .card:hover .card__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .card__meta {
+    margin: 0 0 0.75rem;
+  }
+  .card__summary {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .card__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--surface);
+    order: -1;
+  }
+  @media (min-width: 40rem) {
+    .card__media {
+      order: 0;
+    }
+  }
+  .card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .card:hover .card__media img {
+    transform: scale(1.03);
+  }
+  .card__ph {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

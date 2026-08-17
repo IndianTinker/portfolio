@@ -80,13 +80,25 @@ export default config({
       slugField: 'title',
       path: 'src/content/projects/*',
       format: { data: 'yaml', contentField: 'body' },
-      columns: ['title', 'category', 'year'],
+      columns: ['title', 'category', 'client', 'year'],
       entryLayout: 'content',
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
-        category: fields.text({
+        category: fields.select({
           label: 'Category',
-          description: 'e.g. Design Technology, Research, Product',
+          description: 'What someone would commission this kind of work as',
+          options: [
+            { label: 'Installations & Exhibits', value: 'Installations & Exhibits' },
+            { label: 'Physical Products & Prototypes', value: 'Physical Products & Prototypes' },
+            { label: 'Speculative & Critical', value: 'Speculative & Critical' },
+            { label: 'Digital Products & Platforms', value: 'Digital Products & Platforms' },
+            { label: 'Generative & Data Visuals', value: 'Generative & Data Visuals' },
+          ],
+          defaultValue: 'Installations & Exhibits',
+        }),
+        client: fields.text({
+          label: 'Client / Commissioned by',
+          description: 'Leave blank for self-initiated work',
         }),
         year: fields.text({ label: 'Year', description: 'e.g. 2017 or 2023–2025' }),
         summary: fields.text({

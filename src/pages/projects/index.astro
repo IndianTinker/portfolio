@@ -4,32 +4,215 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { getProjects } from '../../lib/projects';
 
 const projects = await getProjects();
+const selected = projects.filter((p) => p.entry.featured);
+
+// The index below the selected work runs newest-first, ignoring the manual order.
+const startYear = (y: string | null) => Number(y?.match(/\d{4}/)?.[0] ?? 0);
+const index = [...projects].sort((a, b) => startYear(b.entry.year) - startYear(a.entry.year));
+
+// Each bucket doubles as a filter and as a thing someone can commission.
+const BUCKETS = [
+  { name: 'Installations & Exhibits', cta: 'Planning an exhibit or an interactive installation?' },
+  { name: 'Physical Products & Prototypes', cta: 'Need a physical product prototyped and tested?' },
+  { name: 'Speculative & Critical', cta: 'Want a speculative piece to provoke a conversation?' },
+  { name: 'Digital Products & Platforms', cta: 'Building a digital product or platform?' },
+  { name: 'Generative & Data Visuals', cta: 'Have data or a story that needs a visual form?' },
+];
+const EMAIL = 'indiantinker@gmail.com';
 ---
 
 <Base title="Projects — Rohit Gupta">
   <section class="wrap">
     <h1 class="page-head">Projects</h1>
-    <div class="list">
-      {projects.map((project) => <ProjectCard project={project} />)}
+
+    {
+      selected.length > 0 && (
+        <>
+          <h2 class="eyebrow section-head">Selected work</h2>
+          <div class="list">
+            {selected.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    <h2 class="eyebrow section-head section-head--index">All work</h2>
+
+    <div class="filters" role="group" aria-label="Filter projects by kind of work">
+      <button class="chip is-active" data-filter="all" aria-pressed="true">
+        All <span class="chip__n tnum">{index.length}</span>
+      </button>
+      {
+        BUCKETS.map((b) => (
+          <button class="chip" data-filter={b.name} aria-pressed="false">
+            {b.name}{' '}
+            <span class="chip__n tnum">{index.filter((p) => p.entry.category === b.name).length}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <ul class="index" id="index">
+      {
+        index.map((p) => (
+          <li class="row" data-cat={p.entry.category}>
+            <a href={`/projects/${p.slug}`} class="row__link">
+              <span class="row__year tnum">{p.entry.year}</span>
+              <span class="row__title">{p.entry.title}</span>
+              <span class="row__client">{p.entry.client}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="cta">
+      <p class="cta__text" data-cta="all">Working on something in this territory?</p>
+      {
+        BUCKETS.map((b) => (
+          <p class="cta__text" data-cta={b.name} hidden>
+            {b.cta}
+          </p>
+        ))
+      }
+      <a href={`mailto:${EMAIL}`} class="link-underline cta__link">Let’s talk — {EMAIL}</a>
     </div>
   </section>
 </Base>
 
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const rows = document.querySelectorAll<HTMLLIElement>('.row');
+  const ctas = document.querySelectorAll<HTMLParagraphElement>('.cta__text');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter!;
+
+      chips.forEach((c) => {
+        const on = c === chip;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-pressed', String(on));
+      });
+      rows.forEach((r) => {
+        r.hidden = filter !== 'all' && r.dataset.cat !== filter;
+      });
+      ctas.forEach((p) => {
+        p.hidden = p.dataset.cta !== filter;
+      });
+    });
+  });
+</script>
+
 <style>
   .page-head {
-    font-size: 1.5rem; /* f3 (mobile) */
+    font-size: var(--f3); /* f3 (mobile) */
     line-height: 1.25;
     margin: 0 0 clamp(1.5rem, 5vw, 3rem);
     padding-top: 2rem; /* 32px above the page title */
   }
   @media (min-width: 30em) {
     .page-head {
-      font-size: 5rem; /* f-subheadline-ns, matching About */
+      font-size: var(--f-sub); /* f-subheadline-ns, matching About */
     }
+  }
+  .section-head {
+    margin: 0 0 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--line-strong);
+  }
+  .section-head--index {
+    margin-top: clamp(3rem, 8vw, 5rem);
   }
   .list {
     display: flex;
     flex-direction: column;
     gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  /* Filter chips — the light-gray pill, borrowed from the tag style. */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .chip {
+    font: inherit;
+    font-size: var(--f6);
+    cursor: pointer;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid transparent;
+    background: var(--surface);
+    color: var(--ink);
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .chip:hover {
+    border-color: var(--line-strong);
+  }
+  .chip.is-active {
+    background: var(--ink);
+    color: #fff;
+  }
+  .chip__n {
+    color: var(--ink-faint);
+    margin-left: 0.15rem;
+  }
+  .chip.is-active .chip__n {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* The dense index: year, title, client. */
+  .index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .row {
+    border-bottom: 1px solid var(--line);
+  }
+  .row__link {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+    padding: 0.85rem 0;
+    font-size: var(--f5);
+  }
+  @media (min-width: 40rem) {
+    .row__link {
+      grid-template-columns: 5rem 1fr 14rem;
+      gap: 1.5rem;
+      align-items: baseline;
+    }
+  }
+  .row__year {
+    color: var(--ink-faint);
+    font-size: var(--f6);
+  }
+  .row__link:hover .row__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .row__client {
+    color: var(--ink-soft);
+    font-size: var(--f6);
+  }
+
+  .cta {
+    margin-top: 2.5rem;
+  }
+  .cta__text {
+    margin: 0 0 0.35rem;
+    font-size: var(--f3);
+    line-height: 1.25;
+  }
+  .cta__link {
+    font-size: var(--f5);
   }
 </style>

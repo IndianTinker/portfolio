@@ -2,6 +2,8 @@
 
 A personal portfolio and "running record", rebuilt from static HTML into **Astro + Keystatic**. Design language: **faithful port of the original Tachyons site** — `sans-serif` (browser default), hairline rules (2px on nav/footer bars, 1px on section heads), light-purple `#a463f2` rich-text links (dim on hover), light-gray pill tags. Hero is a single plain uniform heading (no gradients, no per-word spans). Page titles (About, Projects) are `f-subheadline` = 5rem desktop / 1.5rem mobile; nav brand `f3` bold, nav links `f5`. Tagline: *Telling stories through making.*
 
+Follow YAGNI principles and prioritise one line solutions.
+
 ## Stack
 
 - **Astro 7** (static output) + **Vercel adapter**. Content pages are prerendered (SSG); the Keystatic admin + API run as serverless routes on Vercel.

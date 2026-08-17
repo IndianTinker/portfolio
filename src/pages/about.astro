@@ -175,7 +175,7 @@ const links = about?.links ?? [];
     padding-top: 2rem; /* 32px above the page title */
   }
   .label {
-    font-size: 1rem;
+    font-size: var(--f5);
     letter-spacing: 0.1em; /* tracked */
     text-transform: uppercase;
     font-weight: 400; /* fw4 */
@@ -196,17 +196,17 @@ const links = about?.links ?? [];
     max-width: 34em;
   }
   .prose-wrap :global(.prose) {
-    font-size: 1rem;
+    font-size: var(--f5);
     line-height: 1.5;
   }
   .about__title {
-    font-size: 1.5rem; /* f3 (mobile) */
+    font-size: var(--f3); /* f3 (mobile) */
     line-height: 1.25;
     margin: 0 0 1.5rem;
   }
   @media (min-width: 30em) {
     .about__title {
-      font-size: 5rem; /* f-subheadline-ns */
+      font-size: var(--f-sub); /* f-subheadline-ns */
     }
   }
   .about__photo img {
@@ -234,7 +234,7 @@ const links = about?.links ?? [];
     padding: 0.1rem 0.6rem;
     background: var(--surface);
     border-radius: 999px;
-    font-size: var(--step--1);
+    font-size: var(--f5);
     color: var(--link);
     transition: opacity 0.15s ease;
   }
@@ -272,7 +272,7 @@ const links = about?.links ?? [];
   }
   .entry {
     margin-bottom: 1.25rem;
-    font-size: 1rem; /* f5 */
+    font-size: var(--f5); /* f5 */
     line-height: 1.5; /* lh-copy */
   }
   .entry p {
@@ -292,7 +292,7 @@ const links = about?.links ?? [];
     list-style: none;
     padding: 0;
     margin: 0;
-    font-size: 1rem; /* f5 */
+    font-size: var(--f5); /* f5 */
   }
   .plain li {
     margin-bottom: 0.85rem;

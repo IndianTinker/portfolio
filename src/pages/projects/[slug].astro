@@ -25,9 +25,27 @@ const hasDetails = caseStudies.some((c) => c.entry.project === slug);
 <Base title={`${entry.title} — Rohit Gupta`} description={entry.summary ?? undefined}>
   <article class="wrap project">
     <header class="project__head">
-      <p class="eyebrow">{[entry.category, entry.year].filter(Boolean).join(' · ')}</p>
+      <p class="eyebrow">{entry.category}</p>
       <h1 class="project__title">{entry.title}</h1>
       {entry.summary && <p class="project__summary measure">{entry.summary}</p>}
+      <dl class="meta">
+        {
+          entry.client && (
+            <div class="meta__row">
+              <dt class="eyebrow meta__key">Client</dt>
+              <dd class="meta__val">{entry.client}</dd>
+            </div>
+          )
+        }
+        {
+          entry.year && (
+            <div class="meta__row">
+              <dt class="eyebrow meta__key">Year</dt>
+              <dd class="meta__val tnum">{entry.year}</dd>
+            </div>
+          )
+        }
+      </dl>
     </header>
 
     {entry.media.length > 0 && <MediaList media={entry.media} />}
@@ -67,29 +85,58 @@ const hasDetails = caseStudies.some((c) => c.entry.project === slug);
       )
     }
 
-    <p class="back rule">
-      <a href="/projects" class="link-underline">← All projects</a>
-    </p>
   </article>
   <Lightbox />
 </Base>
 
 <style>
   .project {
-    padding-top: clamp(1.5rem, 5vw, 3rem);
+    padding-top: 4rem; /* 64px above the category tag */
   }
   .project__head {
     margin-bottom: clamp(1.5rem, 5vw, 3rem);
   }
+  .project__head .eyebrow {
+    font-size: var(--f5); /* tracked f5 */
+    font-weight: 400;
+    color: var(--ink);
+  }
   .project__title {
-    font-size: var(--step-3);
-    line-height: 1.08;
+    font-size: var(--f1);
+    line-height: 1.25; /* lh-title */
     margin: 0.4rem 0 1rem;
   }
   .project__summary {
-    font-size: var(--step-1);
+    font-size: var(--f3);
     color: var(--ink-soft);
+    line-height: 1.5; /* lh-copy */
     margin: 0;
+  }
+  /* Client / Year pair, in the manner of a credit block. */
+  .meta {
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--line);
+    max-width: var(--measure);
+  }
+  .meta__row {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .meta__key {
+    margin: 0;
+    font-size: var(--f6);
+    color: var(--ink-faint);
+  }
+  .meta__val {
+    margin: 0;
+    font-size: var(--f5);
+  }
+  .project__body :global(.prose) {
+    font-size: var(--f5); /* f5 */
+    line-height: 1.5; /* lh-copy */
   }
   .project__body {
     margin-top: clamp(2rem, 6vw, 4rem);
@@ -110,8 +157,7 @@ const hasDetails = caseStudies.some((c) => c.entry.project === slug);
     gap: 0.4rem;
     max-width: var(--measure);
   }
-  .details-link,
-  .back {
+  .details-link {
     margin-top: 2rem;
     padding-top: 1rem;
   }

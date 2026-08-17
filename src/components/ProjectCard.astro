@@ -13,9 +13,9 @@ const thumb = coverThumb(entry.media);
   <div class="card__text">
     <h3 class="card__title">{entry.title}</h3>
     {
-      (entry.category || entry.year) && (
+      (entry.category || entry.client || entry.year) && (
         <p class="eyebrow card__meta">
-          {[entry.category, entry.year].filter(Boolean).join(' · ')}
+          {[entry.category, entry.client, entry.year].filter(Boolean).join(' · ')}
         </p>
       )
     }
@@ -42,8 +42,8 @@ const thumb = coverThumb(entry.media);
     }
   }
   .card__title {
-    font-size: var(--step-2);
-    line-height: 1.1;
+    font-size: var(--f2); /* ~f2 */
+    line-height: 1.15;
     margin: 0 0 0.5rem;
     transition: color 0.15s ease;
   }
@@ -54,10 +54,15 @@ const thumb = coverThumb(entry.media);
   }
   .card__meta {
     margin: 0 0 0.75rem;
+    font-size: var(--f5); /* f5, not the small eyebrow */
+    font-weight: 400;
+    color: var(--ink);
   }
   .card__summary {
     margin: 0;
-    color: var(--ink-soft);
+    color: var(--ink); /* black */
+    font-size: var(--f5); /* f5 */
+    line-height: 1.5; /* lh-copy */
   }
   .card__media {
     aspect-ratio: 4 / 3;

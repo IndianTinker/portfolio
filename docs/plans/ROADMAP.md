@@ -8,9 +8,13 @@ Status as of 2026-07-27. Branch: `astro-revamp`.
 - [x] Keystatic schema (Cloud storage): `projects`, `caseStudies` collections; `home`, `about` singletons.
 - [x] Design system (minimal B&W) + layout, nav, footer, lightbox.
 - [x] Pages: home, projects list, project detail, detailed write-up, about.
-- [x] Home hero: minimal statement with gradient accent words (no canvas effect —
-      the canvasui.dev Bubble was removed because its refraction needs an experimental
-      Chrome-only origin-trial API and was otherwise an inert overlay).
+- [x] Home hero: minimal statement with gradient accent words.
+- [x] Canvas UI Bubble effect re-added to hero section (2026-07-28). Now covers
+      the full page-top (nav + hero) down to the Selected Projects heading.
+      Uses an invisible layout anchor to prevent the WebGL wrapper from
+      collapsing to zero height. Works in Chromium-based browsers via the
+      `html-in-canvas` API; falls back to a translucent soap-film metaball
+      overlay. Nav styles moved to global.css for React-rendered copy.
 - [x] Migrated all 13 projects + full About from `_legacy`.
 - [x] One sample case study (EmoSpace) proving the detail-page flow.
 - [x] `astro build` passes; dev server routes verified (incl. `/keystatic`).

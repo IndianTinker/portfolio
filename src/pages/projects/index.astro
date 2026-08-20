@@ -63,9 +63,12 @@ const EMAIL = 'indiantinker@gmail.com';
             <li class="row" data-cat={p.entry.category}>
               <a href={`/projects/${p.slug}`} class="row__link" data-image={thumb ?? ''}>
                 {thumb && <img class="row__thumb" src={thumb} alt="" loading="lazy" />}
-                <span class="row__year tnum">{p.entry.year}</span>
-                <span class="row__title">{p.entry.title}</span>
-                <span class="row__client">{p.entry.client}</span>
+                <div class="row__text">
+                  <span class="row__year tnum">{p.entry.year}</span>
+                  <span class="row__title">{p.entry.title}</span>
+                  <span class="row__client">{p.entry.client}</span>
+                  {p.entry.summary && <span class="row__brief">{p.entry.summary}</span>}
+                </div>
               </a>
             </li>
           );
@@ -215,13 +218,18 @@ const EMAIL = 'indiantinker@gmail.com';
   .selected-row > :global(a) {
     scroll-snap-align: start;
   }
-  @media (min-width: 60rem) {
+  @media (min-width: 48rem) {
     .selected-row {
       grid-auto-flow: row;
       grid-auto-columns: unset;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       overflow-x: visible;
       scroll-snap-type: none;
+    }
+  }
+  @media (min-width: 60rem) {
+    .selected-row {
+      grid-template-columns: repeat(5, 1fr);
     }
   }
 
@@ -291,15 +299,53 @@ const EMAIL = 'indiantinker@gmail.com';
   .row {
     border-bottom: 1px solid var(--line);
   }
+  .row__brief {
+    display: none;
+  }
   .row__link {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0.15rem;
     padding: 0.85rem 0;
     font-size: var(--f5);
   }
-  @media (min-width: 40rem) {
+  .row__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  /* Tablet: two columns — text block (title, date, client, brief) beside
+     the image. Distinct from both the mobile stack and the desktop
+     hover-preview row below. */
+  @media (min-width: 48rem) and (max-width: 79.99rem) {
     .row__link {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .row__thumb {
+      flex: 0 0 14rem;
+      margin-bottom: 0;
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+    .row__text {
+      flex: 1;
+    }
+    .row__brief {
+      display: block;
+      margin-top: 0.3rem;
+      color: var(--ink-soft);
+      font-size: var(--f6);
+    }
+  }
+  @media (min-width: 80rem) {
+    .row__link {
+      display: block;
+    }
+    .row__text {
+      display: grid;
       grid-template-columns: 5rem 1fr 14rem;
       gap: 1.5rem;
       align-items: baseline;

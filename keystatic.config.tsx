@@ -1,15 +1,19 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
 
 /**
- * Storage: Keystatic Cloud.
- * - Structured content (YAML/Markdoc) is committed to this GitHub repo.
- * - Uploaded images are hosted on the Keystatic Cloud CDN (NOT in the repo).
+ * Storage: LOCAL while GitHub is down / Keystatic Cloud is not set up yet.
+ * - Admin at /keystatic writes directly to files in this repo. No auth needed.
+ * - Uploaded images land in public/images/** (committed to the repo).
  *
- * Before the hosted admin will work you must create a project at
- * https://keystatic.cloud and replace the `project` string below with your
- * "team/project" slug (see docs/plans/ROADMAP.md).
+ * To go back to Cloud storage later:
+ *   1. Create a project at https://keystatic.cloud, install its GitHub App on
+ *      this repo, and set the slug below (currently a placeholder:
+ *      'rohit-gupta/portfolio').
+ *   2. Change storage back to: { kind: 'cloud' }
+ *   3. Add allowed domains (localhost:4321 + the Vercel domain) in the
+ *      Keystatic Cloud dashboard.
+ *      4. Optionally re-upload images so they move to the Cloud CDN.
  */
-const KEYSTATIC_CLOUD_PROJECT = 'rohit-gupta/portfolio';
 
 // A single media item: an uploaded image, an external image URL, or a video
 // link (YouTube / Vimeo). Videos and external images are never stored in the
@@ -69,8 +73,7 @@ const richTextBody = (label: string) =>
   });
 
 export default config({
-  storage: { kind: 'cloud' },
-  cloud: { project: KEYSTATIC_CLOUD_PROJECT },
+  storage: { kind: 'local' },
   ui: {
     brand: { name: 'Rohit Gupta — Portfolio' },
   },
@@ -80,7 +83,7 @@ export default config({
       slugField: 'title',
       path: 'src/content/projects/*',
       format: { data: 'yaml', contentField: 'body' },
-      columns: ['title', 'category', 'client', 'year'],
+      columns: ['title', 'category', 'client', 'year', 'visible'],
       entryLayout: 'content',
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
@@ -109,6 +112,11 @@ export default config({
         featured: fields.checkbox({
           label: 'Featured on homepage',
           defaultValue: false,
+        }),
+        visible: fields.checkbox({
+          label: 'Show on site',
+          description: 'Uncheck to hide from all project lists',
+          defaultValue: true,
         }),
         order: fields.integer({
           label: 'Order',

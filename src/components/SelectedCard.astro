@@ -1,0 +1,60 @@
+---
+import { coverThumb, type ProjectEntry } from '../lib/projects';
+
+interface Props {
+  project: ProjectEntry;
+}
+const { project } = Astro.props;
+const { slug, entry } = project;
+const thumb = coverThumb(entry.media);
+---
+
+<a href={`/projects/${slug}`} class="sel">
+  <div class="sel__media">
+    {thumb ? <img src={thumb} alt={entry.title} loading="lazy" /> : <span class="sel__ph" />}
+  </div>
+  <h3 class="sel__title">{entry.title}</h3>
+  {entry.year && <p class="sel__year tnum">{entry.year}</p>}
+</a>
+
+<style>
+  .sel {
+    display: block;
+    min-width: 0;
+  }
+  .sel__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .sel__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .sel:hover .sel__media img {
+    transform: scale(1.03);
+  }
+  .sel__ph {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .sel__title {
+    font-size: var(--f5);
+    line-height: 1.3;
+    margin: 0.6rem 0 0.15rem;
+    transition: color 0.15s ease;
+  }
+  .sel:hover .sel__title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .sel__year {
+    margin: 0;
+    font-size: var(--f6);
+    color: var(--ink-faint);
+  }
+</style>

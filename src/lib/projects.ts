@@ -20,10 +20,12 @@ export function coverThumb(media: ProjectEntry['entry']['media']): string | null
 
 export async function getProjects(): Promise<ProjectEntry[]> {
   const all = await reader.collections.projects.all();
-  return all.sort((a, b) => {
-    const ao = a.entry.order ?? 100;
-    const bo = b.entry.order ?? 100;
-    if (ao !== bo) return ao - bo;
-    return (b.entry.year ?? '').localeCompare(a.entry.year ?? '');
-  });
+  return all
+    .filter((p) => p.entry.visible !== false)
+    .sort((a, b) => {
+      const ao = a.entry.order ?? 100;
+      const bo = b.entry.order ?? 100;
+      if (ao !== bo) return ao - bo;
+      return (b.entry.year ?? '').localeCompare(a.entry.year ?? '');
+    });
 }

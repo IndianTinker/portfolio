@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npm run convert-heic && astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "npm run convert-heic && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "convert-heic": "node scripts/convert-heic.mjs",
+    "convert-heic:watch": "node scripts/convert-heic.mjs --watch"
   },
   "repository": {
     "type": "git",
@@ -29,5 +31,10 @@
     "astro": "^7.1.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "heic-convert": "^2.1.0",
+    "sharp": "^0.35.3"
   }
 }

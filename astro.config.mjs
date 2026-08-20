@@ -7,7 +7,7 @@ import keystatic from '@keystatic/astro';
 // (/api/keystatic) are injected by the keystatic() integration as on-demand
 // routes and run serverless on Vercel.
 export default defineConfig({
-  site: 'https://rohitg.in',
+  site: 'https://portfolio.rohitg.in',
   output: 'static',
   adapter: vercel(),
   integrations: [react(), keystatic()],

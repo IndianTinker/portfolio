@@ -1,41 +1,65 @@
 ---
 import Base from '../layouts/Base.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import TopBubble from '../components/TopBubble';
+import Hero from '../components/Hero.astro';
+import SelectedCard from '../components/SelectedCard.astro';
 import { reader } from '../lib/reader';
-import { getProjects } from '../lib/projects';
+import { getProjects, coverThumb } from '../lib/projects';
 
 const home = await reader.singletons.home.read();
 const greeting = home?.greeting ?? 'Hello!';
 const intro =
   home?.intro ??
   'I am a designer and an engineer. I like to build things for creative enquiry.';
+const heading = `${greeting} ${intro}`;
 
 const projects = await getProjects();
-const featured = projects.filter((p) => p.entry.featured);
-const shown = featured.length ? featured : projects.slice(0, 6);
+
+// Hero ring: every project that has a cover, in list order.
+const ring = projects
+  .map((p) => ({ src: coverThumb(p.entry.media), title: p.entry.title }))
+  .filter((x): x is { src: string; title: string } => Boolean(x.src));
+
+// Featured strip: first 5 featured projects by manual order.
+const featured = projects.filter((p) => p.entry.featured).slice(0, 5);
 ---
 
 <Base>
-  <TopBubble greeting={greeting} intro={intro} client:load />
+  <Hero heading={heading} images={ring} />
 
   <section class="wrap">
-    <h2 class="section-head rule eyebrow">Selected Projects</h2>
-    <div class="list">
-      {shown.map((project) => <ProjectCard project={project} />)}
+    <h2 class="eyebrow section-head">Selected Projects</h2>
+    <div class="selected-row">
+      {featured.map((project) => <SelectedCard project={project} />)}
     </div>
   </section>
 </Base>
 
 <style>
   .section-head {
-    font-size: var(--f3); /* f3, tracked */
     padding-top: 0.75rem;
-    margin: 0 0 1rem;
+    border-top: 1px solid var(--line-strong);
+    margin: 0 0 1.25rem;
   }
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 4vw, 2.5rem);
+  .selected-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(72vw, 20rem);
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .selected-row > :global(a) {
+    scroll-snap-align: start;
+  }
+  @media (min-width: 60rem) {
+    .selected-row {
+      grid-auto-flow: row;
+      grid-auto-columns: unset;
+      grid-template-columns: repeat(5, 1fr);
+      overflow-x: visible;
+      scroll-snap-type: none;
+    }
   }
 </style>

@@ -170,7 +170,7 @@ a {
   border: 0;
 }
 
-/* Nav — global so React-rendered copy inside Bubble gets styled too */
+/* Nav — global (also consumed by the hero section) */
 .nav {
   display: flex;
   align-items: baseline;

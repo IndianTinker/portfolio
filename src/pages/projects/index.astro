@@ -1,10 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import { getProjects } from '../../lib/projects';
+import SelectedCard from '../../components/SelectedCard.astro';
+import { getProjects, coverThumb } from '../../lib/projects';
 
 const projects = await getProjects();
-const selected = projects.filter((p) => p.entry.featured);
+// Top row: first 5 featured projects by manual order.
+const selected = projects.filter((p) => p.entry.featured).slice(0, 5);
 
 // The index below the selected work runs newest-first, ignoring the manual order.
 const startYear = (y: string | null) => Number(y?.match(/\d{4}/)?.[0] ?? 0);
@@ -29,9 +30,9 @@ const EMAIL = 'indiantinker@gmail.com';
       selected.length > 0 && (
         <>
           <h2 class="eyebrow section-head">Selected work</h2>
-          <div class="list">
+          <div class="selected-row">
             {selected.map((project) => (
-              <ProjectCard project={project} />
+              <SelectedCard project={project} />
             ))}
           </div>
         </>
@@ -56,15 +57,19 @@ const EMAIL = 'indiantinker@gmail.com';
 
     <ul class="index" id="index">
       {
-        index.map((p) => (
-          <li class="row" data-cat={p.entry.category}>
-            <a href={`/projects/${p.slug}`} class="row__link">
-              <span class="row__year tnum">{p.entry.year}</span>
-              <span class="row__title">{p.entry.title}</span>
-              <span class="row__client">{p.entry.client}</span>
-            </a>
-          </li>
-        ))
+        index.map((p) => {
+          const thumb = coverThumb(p.entry.media);
+          return (
+            <li class="row" data-cat={p.entry.category}>
+              <a href={`/projects/${p.slug}`} class="row__link" data-image={thumb ?? ''}>
+                {thumb && <img class="row__thumb" src={thumb} alt="" loading="lazy" />}
+                <span class="row__year tnum">{p.entry.year}</span>
+                <span class="row__title">{p.entry.title}</span>
+                <span class="row__client">{p.entry.client}</span>
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
 
@@ -80,6 +85,14 @@ const EMAIL = 'indiantinker@gmail.com';
       <a href={`mailto:${EMAIL}`} class="link-underline cta__link">Let’s talk — {EMAIL}</a>
     </div>
   </section>
+
+  <img
+    id="row-cursor-image"
+    src=""
+    alt=""
+    class="row-cursor"
+    aria-hidden="true"
+  />
 </Base>
 
 <script>
@@ -106,6 +119,67 @@ const EMAIL = 'indiantinker@gmail.com';
   });
 </script>
 
+<script>
+  // Cursor-following cover preview on the all-work list (Studio-021 port).
+  // Desktop pointers only — touch devices use the inline thumbs.
+  const cursorImage = document.getElementById('row-cursor-image') as HTMLImageElement;
+  const indexList = document.getElementById('index');
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  if (cursorImage && indexList && canHover.matches) {
+    let shown = false;
+
+    const move = (e: MouseEvent) => {
+      cursorImage.style.top = `${e.clientY}px`;
+      cursorImage.style.left = `${e.clientX}px`;
+    };
+    document.addEventListener('mousemove', move, { passive: true });
+
+    indexList.querySelectorAll<HTMLAnchorElement>('.row__link').forEach((link) => {
+      link.addEventListener('mouseenter', () => {
+        const src = link.getAttribute('data-image');
+        if (!src) return;
+        cursorImage.src = src;
+        shown = true;
+        cursorImage.classList.add('is-on');
+      });
+      link.addEventListener('mouseleave', () => {
+        shown = false;
+        cursorImage.classList.remove('is-on');
+      });
+    });
+
+    // Fade out when the pointer leaves the list entirely.
+    indexList.addEventListener('mouseleave', () => {
+      shown = false;
+      cursorImage.classList.remove('is-on');
+    });
+
+    // Preload covers just before the list scrolls into view.
+    const preload = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          indexList!
+            .querySelectorAll<HTMLAnchorElement>('.row__link')
+            .forEach((link) => {
+              const src = link.getAttribute('data-image');
+              if (src) {
+                const img = new Image();
+                img.src = src;
+              }
+            });
+          preload.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    preload.observe(indexList);
+
+    // Safety: if a row is clicked/navigated, drop the preview.
+    document.addEventListener('pagehide', () => cursorImage.classList.remove('is-on'));
+  }
+</script>
+
 <style>
   .page-head {
     font-size: var(--f3); /* f3 (mobile) */
@@ -126,10 +200,51 @@ const EMAIL = 'indiantinker@gmail.com';
   .section-head--index {
     margin-top: clamp(3rem, 8vw, 5rem);
   }
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 4vw, 2.5rem);
+  /* Top row of 5 selected projects: scroll-snap strip on mobile,
+     5-up grid from small-desktop up. */
+  .selected-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(72vw, 20rem);
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .selected-row > :global(a) {
+    scroll-snap-align: start;
+  }
+  @media (min-width: 60rem) {
+    .selected-row {
+      grid-auto-flow: row;
+      grid-auto-columns: unset;
+      grid-template-columns: repeat(5, 1fr);
+      overflow-x: visible;
+      scroll-snap-type: none;
+    }
+  }
+
+  /* Floating cursor-follow preview (desktop hover only). */
+  .row-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.2s ease-out;
+  }
+  .row-cursor.is-on {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   /* Filter chips — the light-gray pill, borrowed from the tag style. */
@@ -194,6 +309,15 @@ const EMAIL = 'indiantinker@gmail.com';
     color: var(--ink-faint);
     font-size: var(--f6);
   }
+  /* Row highlight on hover — the whole band, not just the title. */
+  @media (hover: hover) {
+    .row__link {
+      transition: background 0.15s ease;
+    }
+    .row__link:hover {
+      background: var(--surface);
+    }
+  }
   .row__link:hover .row__title {
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -202,6 +326,21 @@ const EMAIL = 'indiantinker@gmail.com';
   .row__client {
     color: var(--ink-soft);
     font-size: var(--f6);
+  }
+  /* Inline thumb on touch/small screens; hidden where the cursor
+     preview takes over. */
+  .row__thumb {
+    display: block;
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    object-position: top;
+    margin-bottom: 0.5rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .row__thumb {
+      display: none;
+    }
   }
 
   .cta {

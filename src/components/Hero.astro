@@ -1,0 +1,148 @@
+---
+// Orbiting-ring hero: project covers emerge from the center into a slowly
+// rotating ring around the greeting. Pure CSS motion + a one-shot class add.
+// Reduced motion: ring is static, images still emerge (no rotation).
+
+interface OrbitImage {
+  src: string;
+  title: string;
+}
+interface Props {
+  heading: string;
+  images: OrbitImage[];
+}
+const { heading, images } = Astro.props;
+const ring = images.slice(0, 12);
+const n = ring.length;
+---
+
+<section class="hero wrap" data-hero>
+  <div class="orbit-pos" aria-hidden="true">
+    <div class="orbit" style={`--n:${n}`}>
+      {
+        ring.map((img, i) => (
+          <div
+            class="orbit__slot"
+            style={`--i:${i}`}
+          >
+            <div class="orbit__counter">
+              <div class="orbit__item">
+                <img src={img.src} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="hero__center">
+    <h1 class="hero__title">{heading}</h1>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: min(88vh, 46rem);
+    padding-block: clamp(3rem, 9vw, 7rem);
+    overflow: hidden;
+  }
+
+  /* --- ring ------------------------------------------------------- */
+  .orbit-pos {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orbit {
+    position: relative;
+    width: min(150vw, 52rem);
+    aspect-ratio: 1;
+    animation: hero-spin 64s linear infinite;
+  }
+  .orbit__slot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--thumb);
+    height: var(--thumb);
+    /* place upright around the circle: rotate, step out, rotate back */
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * 360deg / var(--n)))
+      translate(var(--r))
+      rotate(calc(var(--i) * -360deg / var(--n)));
+    /* keep in sync with the radius/thumb sizes below */
+    --thumb: clamp(3.25rem, 11vw, 6.5rem);
+    --r: clamp(9.5rem, 34vw, 21rem);
+  }
+  /* cancel the container's spin so images stay upright */
+  .orbit__counter {
+    width: 100%;
+    height: 100%;
+    animation: hero-spin 64s linear infinite reverse;
+  }
+  .orbit__item {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--surface);
+    transform: scale(0);
+    opacity: 0;
+    transition:
+      transform 0.9s cubic-bezier(0.16, 0.84, 0.28, 1)
+        calc(var(--i) * 70ms + 150ms),
+      opacity 0.6s ease calc(var(--i) * 70ms + 150ms);
+  }
+  .orbit__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero.is-in .orbit__item {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Hide the tail of the ring on small screens (first 8 stay). */
+  @media (max-width: 40rem) {
+    .orbit__slot:nth-child(n + 9) {
+      display: none;
+    }
+  }
+
+  @keyframes hero-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* --- centre ----------------------------------------------------- */
+  .hero__center {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-inline: var(--gutter);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit,
+    .orbit__counter {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero) {
+    // One frame later so the transition from scale(0) actually plays.
+    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-in')));
+  }
+</script>

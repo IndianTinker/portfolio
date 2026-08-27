@@ -1,43 +1,45 @@
 ---
-// Orbiting-ring hero: project covers emerge from the center into a slowly
-// rotating ring around the greeting. Pure CSS motion + a one-shot class add.
-// Reduced motion: ring is static, images still emerge (no rotation).
-
+// Image-trail hero — vanilla port of fancycomponents.dev's ImageTrail.
+// Moving the cursor pops project covers one by one along the path: each
+// pops in (scale+opacity via WAAPI), drifts toward the lerped cursor while
+// alive, pops out, and its element is recycled. The trail sits UNDER the
+// heading, which is near-white + mix-blend-mode:difference — glyphs read as
+// ink over the paper and invert to each cover's complement where one
+// passes beneath. Covers are decode-gated so nothing gray ever shows.
 interface OrbitImage {
   src: string;
   title: string;
 }
 interface Props {
-  heading: string;
+  greeting: string;
+  intro: string;
   images: OrbitImage[];
 }
-const { heading, images } = Astro.props;
+const { greeting, intro, images } = Astro.props;
 const ring = images.slice(0, 12);
-const n = ring.length;
+
+// Heading split at the sentence boundary: two lines on desktop.
+const s = intro.split(/(?<=\.)\s+/);
+const line1 = `${greeting} ${s[0] ?? ''}`.trim();
+const line2 = s.slice(1).join(' ');
 ---
 
-<section class="hero wrap" data-hero>
-  <div class="orbit-pos" aria-hidden="true">
-    <div class="orbit" style={`--n:${n}`}>
-      {
-        ring.map((img, i) => (
-          <div
-            class="orbit__slot"
-            style={`--i:${i}`}
-          >
-            <div class="orbit__counter">
-              <div class="orbit__item">
-                <img src={img.src} alt="" loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
-              </div>
-            </div>
-          </div>
-        ))
-      }
-    </div>
+<section class="hero" data-hero>
+  <div class="hero__trail" data-trail aria-hidden="true">
+    {
+      ring.map((img) => (
+        <div class="trail__item">
+          <img src={img.src} alt="" loading="eager" decoding="async" />
+        </div>
+      ))
+    }
   </div>
 
   <div class="hero__center">
-    <h1 class="hero__title">{heading}</h1>
+    <h1 class="hero__title">
+      {line1}{' '}
+      {line2 ? <><br class="hero__br" />{line2}</> : ''}
+    </h1>
   </div>
 </section>
 
@@ -51,98 +53,218 @@ const n = ring.length;
     overflow: hidden;
   }
 
-  /* --- ring ------------------------------------------------------- */
-  .orbit-pos {
+  /* Trail UNDER the heading — the blend needs the covers as backdrop. */
+  .hero__trail {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
+    z-index: 2;
     pointer-events: none;
-    z-index: 0;
-  }
-  .orbit {
-    position: relative;
-    width: min(150vw, 52rem);
-    aspect-ratio: 1;
-    animation: hero-spin 64s linear infinite;
-  }
-  .orbit__slot {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: var(--thumb);
-    height: var(--thumb);
-    /* place upright around the circle: rotate, step out, rotate back */
-    transform: translate(-50%, -50%)
-      rotate(calc(var(--i) * 360deg / var(--n)))
-      translate(var(--r))
-      rotate(calc(var(--i) * -360deg / var(--n)));
-    /* keep in sync with the radius/thumb sizes below */
-    --thumb: clamp(3.25rem, 11vw, 6.5rem);
-    --r: clamp(9.5rem, 34vw, 21rem);
-  }
-  /* cancel the container's spin so images stay upright */
-  .orbit__counter {
-    width: 100%;
-    height: 100%;
-    animation: hero-spin 64s linear infinite reverse;
-  }
-  .orbit__item {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: var(--surface);
-    transform: scale(0);
     opacity: 0;
-    transition:
-      transform 0.9s cubic-bezier(0.16, 0.84, 0.28, 1)
-        calc(var(--i) * 70ms + 150ms),
-      opacity 0.6s ease calc(var(--i) * 70ms + 150ms);
+    transition: opacity 0.4s ease;
   }
-  .orbit__item img {
+  .hero__trail.is-ready {
+    opacity: 1;
+  }
+  .trail__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: clamp(110px, 13vw, 190px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    /* transform is driven by JS (translate3d + rotate); the inner img
+       carries the WAAPI scale/opacity keyframes so they never fight */
+    will-change: transform;
+  }
+  .trail__item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
-  .hero.is-in .orbit__item {
-    transform: scale(1);
-    opacity: 1;
-  }
 
-  /* Hide the tail of the ring on small screens (first 8 stay). */
-  @media (max-width: 40rem) {
-    .orbit__slot:nth-child(n + 9) {
-      display: none;
-    }
-  }
-
-  @keyframes hero-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* --- centre ----------------------------------------------------- */
+  /* Heading is the BOTTOM layer — covers pop over it and take it over. */
   .hero__center {
     position: relative;
     z-index: 1;
     text-align: center;
-    padding-inline: var(--gutter);
+    padding-inline: clamp(2.5rem, 8vw, 9rem);
+    max-width: none;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .orbit,
-    .orbit__counter {
-      animation: none;
+  .hero__title {
+    color: var(--ink);
+    font-family: var(--font-display);
+    letter-spacing: 0;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3.3vw, 2.65rem);
+    line-height: 1.32;
+    text-wrap: balance;
+  }
+  /* On small screens the hard break fights natural wrapping — drop it. */
+  @media (max-width: 48rem) {
+    .hero__br {
+      display: none;
+    }
+    /* text up top, covers get the room underneath — no overlap */
+    .hero {
+      align-content: start;
+      place-items: start center;
+    }
+    .hero__center {
+      padding-inline: 1.25rem;
+    }
+    .trail__item {
+      width: min(76vw, 320px);
     }
   }
 </style>
 
 <script>
   const hero = document.querySelector<HTMLElement>('[data-hero]');
-  if (hero) {
-    // One frame later so the transition from scale(0) actually plays.
-    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-in')));
+  const trail = hero?.querySelector<HTMLElement>('[data-trail]');
+
+  if (hero && trail && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const items = [...trail.querySelectorAll<HTMLElement>('.trail__item')];
+    const THRESHOLD = 60; // px of travel between pops (fancy: threshold)
+
+    const last = { x: -1e4, y: -1e4 };
+    let idx = 0;
+    let ready = false;
+    const MAX_ALIVE = 4; // rolling buffer of covers on screen at once
+    const alive: HTMLElement[] = [];
+
+    const retire = (el: HTMLElement) => {
+      const img = el.firstElementChild;
+      if (!img) return;
+      img.getAnimations().forEach((a) => a.cancel());
+      const out = img.animate(
+        [
+          { scale: '1', opacity: '1' },
+          { scale: '0.5', opacity: '0' },
+        ],
+        { duration: 220, easing: 'ease-out' }
+      );
+      out.onfinish = () => {
+        el.style.display = 'none';
+      };
+    };
+
+    const spawn = (x: number, y: number) => {
+      const el = items[idx % items.length];
+      idx++;
+      el.firstElementChild?.getAnimations().forEach((a) => a.cancel());
+      el.style.display = 'block';
+      el.style.zIndex = String(idx % 9999);
+      // anchored: the cover stamps down here and does not move again
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) rotate(${Math.round((Math.random() * 2 - 1) * 9)}deg)`;
+      const img = el.firstElementChild;
+      // pop in and HOLD — a cover only leaves when the buffer evicts it
+      img?.animate(
+        [
+          { scale: '0', opacity: '0' },
+          { scale: '1', opacity: '1' },
+        ],
+        { duration: 260, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', fill: 'both' }
+      );
+      alive.push(el);
+      while (alive.length > MAX_ALIVE) {
+        const old = alive.shift();
+        if (old) retire(old);
+      }
+    };
+
+    hero.addEventListener('pointermove', (e) => {
+      if (!ready || mqMobile.matches) return;
+      const r = hero.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      if (Math.hypot(x - last.x, y - last.y) < THRESHOLD) return;
+      last.x = x;
+      last.y = y;
+      spawn(x, y);
+    });
+
+    // --- mobile: concentric reveal from the centre ------------------------
+    // Covers tick in one by one, each bigger than the last, stacked behind
+    // the text — 40% → 100% at the 6th, easing back down after.
+    const mqMobile = window.matchMedia('(max-width: 48rem)');
+    const MOBILE_SIZES = [0.4, 0.52, 0.64, 0.76, 0.88, 1, 0.9, 0.8, 0.72, 0.64, 0.58, 0.52];
+    const MOBILE_STEP = 900; // ms each cover holds before the next takes over
+    let mTimer: ReturnType<typeof setInterval> | null = null;
+    let mCurrent: HTMLElement | null = null;
+    let mIdx = 0;
+
+    const mobileOut = (el: HTMLElement) => {
+      const img = el.firstElementChild;
+      if (!img) return;
+      const out = img.animate(
+        [
+          { scale: '1', opacity: '1' },
+          { scale: '0.6', opacity: '0' },
+        ],
+        { duration: 300, easing: 'ease-out', fill: 'both' }
+      );
+      out.onfinish = () => {
+        el.style.display = 'none';
+      };
+    };
+
+    const mobileStep = () => {
+      if (!mqMobile.matches) return;
+      const r = hero.getBoundingClientRect();
+      const t = (hero.querySelector('.hero__center') as HTMLElement).getBoundingClientRect();
+      const cx = r.width / 2;
+      // centre of whatever room is left under the heading
+      const cy = (t.bottom - r.top + r.height) / 2;
+      const el = items[mIdx % items.length];
+      const size = MOBILE_SIZES[mIdx % MOBILE_SIZES.length];
+      mIdx++;
+      if (mCurrent && mCurrent !== el) mobileOut(mCurrent);
+      mCurrent = el;
+      el.getAnimations().forEach((a) => a.cancel());
+      el.style.display = 'block';
+      el.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%) scale(${size})`;
+      el.firstElementChild?.animate(
+        [
+          { scale: '0.6', opacity: '0' },
+          { scale: '1', opacity: '1' },
+        ],
+        { duration: 320, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', fill: 'both' }
+      );
+    };
+
+    const setMobile = (on: boolean) => {
+      if (mTimer) clearInterval(mTimer);
+      mTimer = null;
+      mCurrent = null;
+      mIdx = 0;
+      items.forEach((el) => {
+        el.getAnimations().forEach((a) => a.cancel());
+        el.firstElementChild?.getAnimations().forEach((a) => a.cancel());
+        el.style.display = 'none';
+      });
+      if (!on) return;
+      mobileStep();
+      mTimer = setInterval(mobileStep, MOBILE_STEP);
+    };
+    setMobile(mqMobile.matches);
+    mqMobile.addEventListener('change', (e) => setMobile(e.matches));
+
+    // Reveal + arm only once every cover has decoded — no gray boxes.
+    Promise.all(
+      items.map((el) => {
+        const img = el.querySelector('img');
+        if (!img) return Promise.resolve();
+        if (img.complete && img.naturalWidth) return Promise.resolve();
+        return new Promise<void>((res) => {
+          img.addEventListener('load', () => res(), { once: true });
+          img.addEventListener('error', () => res(), { once: true });
+        });
+      })
+    ).then(() => {
+      trail.classList.add('is-ready');
+      ready = true;
+    });
   }
 </script>

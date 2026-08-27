@@ -83,7 +83,7 @@ export default config({
       slugField: 'title',
       path: 'src/content/projects/*',
       format: { data: 'yaml', contentField: 'body' },
-      columns: ['title', 'category', 'client', 'year', 'visible'],
+      columns: ['title', 'category', 'client', 'year', 'status', 'visible'],
       entryLayout: 'content',
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
@@ -113,6 +113,16 @@ export default config({
           label: 'Featured on homepage',
           defaultValue: false,
         }),
+        status: fields.select({
+          label: 'Status',
+          description: 'Upcoming / In progress entries surface on the homepage',
+          options: [
+            { label: 'Completed', value: 'Completed' },
+            { label: 'In progress', value: 'In progress' },
+            { label: 'Upcoming', value: 'Upcoming' },
+          ],
+          defaultValue: 'Completed',
+        }),
         visible: fields.checkbox({
           label: 'Show on site',
           description: 'Uncheck to hide from all project lists',
@@ -122,6 +132,29 @@ export default config({
           label: 'Order',
           description: 'Lower numbers appear first',
           defaultValue: 100,
+        }),
+        difficulty: fields.integer({
+          label: 'Difficulty (1–5)',
+          description: 'Your own rating — drives the sort control on /projects',
+          validation: { min: 1, max: 5 },
+          defaultValue: 3,
+        }),
+        fun: fields.integer({
+          label: 'Fun (1–5)',
+          description: 'Your own rating',
+          validation: { min: 1, max: 5 },
+          defaultValue: 3,
+        }),
+        popularity: fields.integer({
+          label: 'Popularity (1–5)',
+          description: 'Your own rating — swap in real metrics later if you get analytics',
+          validation: { min: 1, max: 5 },
+          defaultValue: 3,
+        }),
+        durationWeeks: fields.integer({
+          label: 'Duration (weeks)',
+          description: 'Rough effort, in weeks — leave blank if unknown',
+          validation: { min: 0 },
         }),
         media: fields.array(mediaItem, {
           label: 'Media',
@@ -182,6 +215,25 @@ export default config({
           defaultValue:
             'I am a designer and an engineer. I like to build things for creative enquiry.',
         }),
+        testimonials: fields.array(
+          fields.object({
+            quote: fields.text({
+              label: 'Quote',
+              multiline: true,
+              validation: { isRequired: true },
+            }),
+            name: fields.text({ label: 'Name', validation: { isRequired: true } }),
+            role: fields.text({
+              label: 'Role / context',
+              description: 'e.g. Curator, Museum X',
+            }),
+            url: fields.url({ label: 'Link', description: 'Optional' }),
+          }),
+          {
+            label: 'Testimonials',
+            itemLabel: (p) => p.fields.name.value || 'Testimonial',
+          }
+        ),
       },
     }),
     about: singleton({

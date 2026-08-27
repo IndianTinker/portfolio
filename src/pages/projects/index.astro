@@ -1,15 +1,25 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SelectedCard from '../../components/SelectedCard.astro';
-import { getProjects, coverThumb } from '../../lib/projects';
+import { getProjects, coverThumb, startYear, score } from '../../lib/projects';
 
 const projects = await getProjects();
 // Top row: first 5 featured projects by manual order.
 const selected = projects.filter((p) => p.entry.featured).slice(0, 5);
 
 // The index below the selected work runs newest-first, ignoring the manual order.
-const startYear = (y: string | null) => Number(y?.match(/\d{4}/)?.[0] ?? 0);
-const index = [...projects].sort((a, b) => startYear(b.entry.year) - startYear(a.entry.year));
+const index = [...projects].sort(
+  (a, b) => startYear(b.entry.year) - startYear(a.entry.year)
+);
+
+// Sort dimensions — each chip toggles asc/desc; empty state = manual order.
+const SORTS = [
+  { key: 'year', label: 'Year' },
+  { key: 'difficulty', label: 'Difficulty' },
+  { key: 'fun', label: 'Fun' },
+  { key: 'popularity', label: 'Popularity' },
+  { key: 'duration', label: 'Duration' },
+];
 
 // Each bucket doubles as a filter and as a thing someone can commission.
 const BUCKETS = [
@@ -42,17 +52,34 @@ const EMAIL = 'indiantinker@gmail.com';
     <h2 class="eyebrow section-head section-head--index">All work</h2>
 
     <div class="filters" role="group" aria-label="Filter projects by kind of work">
-      <button class="chip is-active" data-filter="all" aria-pressed="true">
-        All <span class="chip__n tnum">{index.length}</span>
-      </button>
-      {
-        BUCKETS.map((b) => (
-          <button class="chip" data-filter={b.name} aria-pressed="false">
-            {b.name}{' '}
-            <span class="chip__n tnum">{index.filter((p) => p.entry.category === b.name).length}</span>
-          </button>
-        ))
-      }
+      <span class="filters__label">Domain</span>
+      <div class="filters__chips">
+        <button class="chip is-active" data-filter="all" aria-pressed="true">
+          All <span class="chip__n tnum">{index.length}</span>
+        </button>
+        {
+          BUCKETS.map((b) => (
+            <button class="chip" data-filter={b.name} aria-pressed="false">
+              {b.name}{' '}
+              <span class="chip__n tnum">{index.filter((p) => p.entry.category === b.name).length}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="filters" role="group" aria-label="Sort projects">
+      <span class="filters__label">Sort</span>
+      <div class="filters__chips">
+        {
+          SORTS.map((s) => (
+            <button class="chip chip--sort" data-sort={s.key} aria-pressed="false">
+              {s.label} <span class="chip__dir" aria-hidden="true" />
+            </button>
+          ))
+        }
+        <button class="chip chip--random" id="random-btn" type="button">Random ↝</button>
+      </div>
     </div>
 
     <ul class="index" id="index">
@@ -60,7 +87,15 @@ const EMAIL = 'indiantinker@gmail.com';
         index.map((p) => {
           const thumb = coverThumb(p.entry.media);
           return (
-            <li class="row" data-cat={p.entry.category}>
+            <li
+              class="row"
+              data-cat={p.entry.category}
+              data-year={startYear(p.entry.year)}
+              data-difficulty={score(p.entry, 'difficulty')}
+              data-fun={score(p.entry, 'fun')}
+              data-popularity={score(p.entry, 'popularity')}
+              data-duration={score(p.entry, 'durationWeeks')}
+            >
               <a href={`/projects/${p.slug}`} class="row__link" data-image={thumb ?? ''}>
                 {thumb && <img class="row__thumb" src={thumb} alt="" loading="lazy" />}
                 <div class="row__text">
@@ -99,7 +134,7 @@ const EMAIL = 'indiantinker@gmail.com';
 </Base>
 
 <script>
-  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filters .chip[data-filter]');
   const rows = document.querySelectorAll<HTMLLIElement>('.row');
   const ctas = document.querySelectorAll<HTMLParagraphElement>('.cta__text');
 
@@ -119,6 +154,63 @@ const EMAIL = 'indiantinker@gmail.com';
         p.hidden = p.dataset.cta !== filter;
       });
     });
+  });
+</script>
+
+<script>
+  // Sort chips: click to sort asc, click again to flip desc. Each <li> carries
+  // numeric data-* attrs emitted at build time; ordering happens by re-appending.
+  const sortChips = document.querySelectorAll<HTMLButtonElement>('.chip--sort');
+  const indexList = document.getElementById('index');
+
+  if (indexList) {
+    const rows = Array.from(indexList.children) as HTMLLIElement[];
+    let active: string | null = null;
+    let dir = 1;
+
+    // Remember the build-time order for the reset path.
+    rows.forEach((r, i) => (r.dataset.i = String(i)));
+
+    const apply = () => {
+      if (!active) {
+        // Empty state = the build-time (newest-first) order.
+        rows.sort((a, b) => Number(a.dataset.i) - Number(b.dataset.i));
+      } else {
+        rows.sort((a, b) => (Number(a.dataset[active!]) - Number(b.dataset[active!])) * dir);
+      }
+      rows.forEach((r) => indexList.appendChild(r));
+    };
+
+    sortChips.forEach((chip, i) => {
+      chip.addEventListener('click', () => {
+        const key = chip.dataset.sort!;
+        if (active === key) {
+          dir *= -1; // same dimension — flip direction
+        } else {
+          active = key;
+          dir = 1;
+        }
+        sortChips.forEach((c) => {
+          const on = c === chip && active === key;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', String(on));
+          const arrow = c.querySelector<HTMLElement>('.chip__dir');
+          if (arrow) arrow.textContent = on ? (dir === 1 ? '↑' : '↓') : '';
+        });
+        apply();
+      });
+    });
+  }
+
+  // Random project — jumps to one of the currently visible rows.
+  document.getElementById('random-btn')?.addEventListener('click', () => {
+    const visible = Array.from(document.querySelectorAll<HTMLLIElement>('.row')).filter(
+      (r) => !r.hidden
+    );
+    if (visible.length === 0) return;
+    const pick = visible[Math.floor(Math.random() * visible.length)];
+    const link = pick.querySelector<HTMLAnchorElement>('a.row__link');
+    if (link) window.location.href = link.href;
   });
 </script>
 
@@ -255,17 +347,33 @@ const EMAIL = 'indiantinker@gmail.com';
     transform: translate(-50%, -50%) scale(1);
   }
 
-  /* Filter chips — the light-gray pill, borrowed from the tag style. */
+  /* Filter/sort rows — grey DOMAIN/SORT kicker in its own column, the chips
+     in their own column where they wrap onto more rows to stay fully visible. */
   .filters {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(0.9rem, 2vw, 1.75rem);
+    row-gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .filters__chips {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+  }
+  @media (max-width: 30em) {
+    .filters {
+      grid-template-columns: 1fr; /* stack the label above the scrolling strip */
+      row-gap: 0.5rem;
+    }
   }
   .chip {
     font: inherit;
     font-size: var(--f6);
     cursor: pointer;
+    white-space: nowrap; /* one line per chip — the column scrolls instead */
+    flex: none;
     padding: 0.4rem 0.75rem;
     border: 1px solid transparent;
     background: var(--surface);
@@ -281,12 +389,72 @@ const EMAIL = 'indiantinker@gmail.com';
     background: var(--ink);
     color: #fff;
   }
-  .chip__n {
-    color: var(--ink-faint);
-    margin-left: 0.15rem;
+  /* Domain filter chips speak the same mono voice as the sort row: outlined
+     box, Departure Mono label, count in a black rounded-full pill. */
+  .chip[data-filter] {
+    font-family: var(--font-display);
+    background: transparent;
+    border-color: var(--line);
+    transition:
+      background 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
+  .chip[data-filter]:hover {
+    border-color: var(--line-strong);
+  }
+  .chip[data-filter].is-active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .chip__n {
+    display: inline-block; /* shaped pill around the number */
+    margin-left: 0.35rem;
+    padding: 0 0.45rem;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 9999px;
+  }
+  /* Active chip is already black — invert the pill to keep the count legible. */
   .chip.is-active .chip__n {
-    color: rgba(255, 255, 255, 0.6);
+    background: #fff;
+    color: var(--ink);
+  }
+
+  /* Sort row shares the same two-column grid — no special casing. */
+  .filters__label {
+    font-size: var(--f6);
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .chip--sort {
+    font-family: var(--font-display); /* Departure Mono — chrome voice */
+    font-size: var(--f6);
+    background: transparent;
+    border-color: var(--line);
+  }
+  .chip--sort:hover {
+    border-color: var(--line-strong);
+  }
+  .chip--sort.is-active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .chip__dir {
+    display: inline-block;
+    min-width: 0.75em;
+  }
+  .chip--random {
+    margin-left: auto; /* park the dice at the far end of the row */
+    border-color: var(--line-strong);
+  }
+  .chip--random:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
   }
 
   /* The dense index: year, title, client. */

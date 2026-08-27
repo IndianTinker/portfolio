@@ -100,6 +100,13 @@ const hasDetails = caseStudies.some((c) => c.entry.project === slug);
     font-size: var(--f5); /* tracked f5 */
     font-weight: 400;
     color: var(--ink);
+    font-family: var(--font-display); /* Departure Mono — category tag */
+    letter-spacing: 0; /* mono keeps its own grid */
+  }
+  /* Awards kicker gets the same mono voice; Client/Year credit labels stay sans. */
+  .awards .eyebrow {
+    font-family: var(--font-display);
+    letter-spacing: 0;
   }
   .project__title {
     font-size: var(--f1);

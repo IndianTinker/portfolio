@@ -1,8 +1,17 @@
 /* ------------------------------------------------------------------ *
  * Rohit Gupta — portfolio design system
- * Ports the original Tachyons site: sans-serif, hairline rules,
+ * Ports the original Tachyons site: sans-serif body, hairline rules,
  * light-purple rich-text links, fixed f-scale type sizes.
+ * Departure Mono headlines give the chrome its own voice.
  * ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* One ink, expressed at four opacities. No accent hue. */
@@ -41,6 +50,8 @@
   /* The original site used Tachyons `system-sans-serif`, i.e. the browser's
      default sans — not the -apple-system UI stack. Keep it that way. */
   --font-sans: sans-serif;
+  /* Headings + chrome accents (self-hosted, regular weight only). */
+  --font-display: 'Departure Mono', monospace;
 
   color-scheme: light;
 }
@@ -182,7 +193,7 @@ a {
   padding-bottom: 2rem;
 }
 .nav__brand {
-  font-weight: 700;
+  font-weight: 400; /* Departure Mono: single weight, faux bold smears pixels */
   font-size: var(--f5);
 }
 .nav__links {
@@ -208,28 +219,22 @@ a {
   color: var(--ink);
 }
 
-/* Hero section (rendered by client-side React Bubble) */
-.hero {
-  padding-top: clamp(3rem, 9vw, 7rem);
-  padding-bottom: clamp(3.5rem, 10vw, 8rem);
-}
-.hero__title {
-  font-size: var(--f2);
-  line-height: 1.25;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  margin: 0;
-  max-width: none;
-}
-@media (min-width: 30em) {
-  .hero__title {
-    font-size: var(--f-sub);
-  }
-}
+/* Hero styles live in Hero.astro — title sizing, blend, canvas stage. */
 
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* Departure Mono chrome — nav brand + links and footer speak in the pixel
+   voice. Everything else (titles, body, meta labels) stays default sans.
+   Mono must not be tracked (and has a single weight), so running chrome
+   text zeroes its tracking. Defined last to beat the class rules above. */
+.nav__brand,
+.nav__link,
+.footer__inner {
+  font-family: var(--font-display);
+  letter-spacing: 0;
 }

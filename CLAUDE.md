@@ -1,8 +1,10 @@
 # Portfolio — Rohit Gupta
 
-A personal portfolio and "running record", rebuilt from static HTML into **Astro + Keystatic**. Design language: **faithful port of the original Tachyons site** — `sans-serif` (browser default), hairline rules (2px on nav/footer bars, 1px on section heads), light-purple `#a463f2` rich-text links (dim on hover), light-gray pill tags. Hero is a single plain uniform heading (no gradients, no per-word spans). Page titles (About, Projects) are `f-subheadline` = 5rem desktop / 1.5rem mobile; nav brand `f3` bold, nav links `f5`. Tagline: *Telling stories through making.*
+A personal portfolio and "running record", rebuilt from static HTML into **Astro + Keystatic**. Design language: **faithful port of the original Tachyons site** — `sans-serif` (browser default), hairline rules (2px on nav/footer bars, 1px on section heads), light-purple `#a463f2` rich-text links (dim on hover), light-gray pill tags. Hero (2026-08): image-trail — moving the cursor pops project covers one by one along the path (vanilla port of fancycomponents.dev's ImageTrail: lerp cache + 110px threshold + recycled WAAPI pop in/out); heading ("Hello! I am a…" etc.) is full Departure Mono, two lines, plain ink — covers fly over it. Reduced motion → static. Page titles (About, Projects) are `f-subheadline` = 5rem desktop / 1.5rem mobile; nav brand `f3` bold, nav links `f5`. Tagline: *Telling stories through making.*
 
 Follow YAGNI principles and prioritise one line solutions.
+
+Use agent-browser if required to verify results. 
 
 ## Stack
 
@@ -69,7 +71,10 @@ Deployment + Keystatic Cloud connection are **manual steps not yet done** — se
 - Design system lives in `src/styles/global.css`, porting the original Tachyons look:
   `--font-sans: sans-serif`; `--accent: #aa235e` (link-underline hover); `--link: #a463f2`
   (light-purple) for `.prose a` rich-text links, no underline, dims on hover;
-  hero is a single plain heading (gradients removed);
+  hero is the image-trail (`Hero.astro`: recycled items popping along the
+  cursor path via WAAPI, decode-gated so no gray boxes) sitting UNDER a full
+  Departure Mono two-line heading in `mix-blend-mode: difference` — glyphs
+  read as ink and invert over passing covers;
   `--surface: #eee` (light-gray) for pill tags. Rules: `.rule`/`.rule-faint` = 1px
   (section heads); nav + footer bars are 2px. Hand-written CSS only — no Tailwind /
   no heavy UI frameworks.

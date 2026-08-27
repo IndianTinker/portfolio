@@ -29,3 +29,17 @@ export async function getProjects(): Promise<ProjectEntry[]> {
       return (b.entry.year ?? '').localeCompare(a.entry.year ?? '');
     });
 }
+
+/** First four-digit year in a free-text year field like '2023–2025'. */
+export function startYear(y: string | null): number {
+  return Number(y?.match(/\d{4}/)?.[0] ?? 0);
+}
+
+/** Numeric score for the sort control; unrated projects default to 3 (0 for duration). */
+export function score(
+  entry: ProjectEntry['entry'],
+  key: 'difficulty' | 'fun' | 'popularity' | 'durationWeeks'
+): number {
+  const v = entry[key];
+  return typeof v === 'number' ? v : key === 'durationWeeks' ? 0 : 3;
+}

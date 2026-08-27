@@ -10,7 +10,6 @@ const greeting = home?.greeting ?? 'Hello!';
 const intro =
   home?.intro ??
   'I am a designer and an engineer. I like to build things for creative enquiry.';
-const heading = `${greeting} ${intro}`;
 
 const projects = await getProjects();
 
@@ -21,10 +20,17 @@ const ring = projects
 
 // Featured strip: first 5 featured projects by manual order.
 const featured = projects.filter((p) => p.entry.featured).slice(0, 5);
+
+// Upcoming / in-progress work surfaces under the selected strip.
+const upcoming = projects.filter(
+  (p) => p.entry.status === 'Upcoming' || p.entry.status === 'In progress'
+);
+
+const testimonials = home?.testimonials ?? [];
 ---
 
 <Base>
-  <Hero heading={heading} images={ring} />
+    <Hero greeting={greeting} intro={intro} images={ring} />
 
   <section class="wrap">
     <h2 class="eyebrow section-head">Selected Projects</h2>
@@ -32,6 +38,50 @@ const featured = projects.filter((p) => p.entry.featured).slice(0, 5);
       {featured.map((project) => <SelectedCard project={project} />)}
     </div>
   </section>
+
+  {
+    upcoming.length > 0 && (
+      <section class="wrap">
+        <h2 class="eyebrow section-head">Upcoming Projects</h2>
+        <ul class="upcoming">
+          {upcoming.map((p) => (
+            <li class="upcoming__row">
+              <span class="upcoming__status tnum">{p.entry.status}</span>
+              <a href={`/projects/${p.slug}`} class="upcoming__title link-underline">
+                {p.entry.title}
+              </a>
+              {p.entry.summary && <span class="upcoming__brief">{p.entry.summary}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    testimonials.length > 0 && (
+      <section class="wrap">
+        <h2 class="eyebrow section-head">Testimonials</h2>
+        <div class="quotes">
+          {testimonials.map((t) => (
+            <figure class="quote">
+              <blockquote class="quote__text">“{t.quote}”</blockquote>
+              <figcaption class="quote__cite">
+                {t.url ? (
+                  <a href={t.url} target="_blank" rel="noopener" class="prose-link">
+                    {t.name}
+                  </a>
+                ) : (
+                  t.name
+                )}
+                {t.role && <span class="quote__role"> — {t.role}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )
+  }
 </Base>
 
 <style>
@@ -66,5 +116,68 @@ const featured = projects.filter((p) => p.entry.featured).slice(0, 5);
     .selected-row {
       grid-template-columns: repeat(5, 1fr);
     }
+  }
+
+  /* Upcoming / in-progress — dense rows, status pill in the tag style. */
+  .upcoming {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .upcoming__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .upcoming__status {
+    font-family: var(--font-display);
+    font-size: var(--f6);
+    background: var(--surface);
+    padding: 0.15rem 0.5rem;
+  }
+  .upcoming__title {
+    font-size: var(--f5);
+  }
+  .upcoming__brief {
+    flex-basis: 100%;
+    color: var(--ink-soft);
+    font-size: var(--f6);
+  }
+
+  /* Testimonials — quiet quote cards on hairlines. */
+  .quotes {
+    display: grid;
+    gap: 0;
+  }
+  @media (min-width: 48rem) {
+    .quotes {
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(1.5rem, 4vw, 3rem);
+    }
+  }
+  .quote {
+    margin: 0;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .quote__text {
+    margin: 0 0 0.75rem;
+    font-size: var(--f3);
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+  .quote__cite {
+    font-size: var(--f6);
+    color: var(--ink-soft);
+  }
+  .quote__cite a {
+    color: var(--link); /* light-purple, dims on hover — rich-text link voice */
+  }
+  .quote__cite a:hover {
+    opacity: 0.5;
   }
 </style>

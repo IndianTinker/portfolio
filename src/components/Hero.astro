@@ -251,20 +251,23 @@ const line2 = s.slice(1).join(' ');
     setMobile(mqMobile.matches);
     mqMobile.addEventListener('change', (e) => setMobile(e.matches));
 
-    // Reveal + arm only once every cover has decoded — no gray boxes.
-    Promise.all(
-      items.map((el) => {
-        const img = el.querySelector('img');
-        if (!img) return Promise.resolve();
-        if (img.complete && img.naturalWidth) return Promise.resolve();
-        return new Promise<void>((res) => {
-          img.addEventListener('load', () => res(), { once: true });
-          img.addEventListener('error', () => res(), { once: true });
-        });
-      })
-    ).then(() => {
-      trail.classList.add('is-ready');
-      ready = true;
+    // Progressive reveal — arm as soon as the first images decode.
+    let loadedCount = 0;
+    const MIN_READY = 3; // spawn after just 3 covers decode
+    const markReady = () => {
+      if (ready) return;
+      loadedCount++;
+      if (loadedCount >= MIN_READY) {
+        trail.classList.add('is-ready');
+        ready = true;
+      }
+    };
+    items.forEach((el) => {
+      const img = el.querySelector('img');
+      if (!img) { markReady(); return; }
+      if (img.complete && img.naturalWidth) { markReady(); return; }
+      img.addEventListener('load', markReady, { once: true });
+      img.addEventListener('error', markReady, { once: true });
     });
   }
 </script>

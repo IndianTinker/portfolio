@@ -215,6 +215,21 @@ export default config({
           defaultValue:
             'I am a designer and an engineer. I like to build things for creative enquiry.',
         }),
+        companies: fields.array(
+          fields.object({
+            name: fields.text({ label: 'Company name', validation: { isRequired: true } }),
+            logo: fields.image({
+              label: 'Logo',
+              directory: 'public/images/companies',
+              publicPath: '/images/companies/',
+            }),
+            url: fields.url({ label: 'Website', description: 'Optional' }),
+          }),
+          {
+            label: 'Companies & collaborators',
+            itemLabel: (p) => p.fields.name.value || 'Company',
+          }
+        ),
         testimonials: fields.array(
           fields.object({
             quote: fields.text({

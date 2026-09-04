@@ -7,10 +7,14 @@ const projects = await getProjects();
 // Top row: first 5 featured projects by manual order.
 const selected = projects.filter((p) => p.entry.featured).slice(0, 5);
 
-// The index below the selected work runs newest-first, ignoring the manual order.
-const index = [...projects].sort(
-  (a, b) => startYear(b.entry.year) - startYear(a.entry.year)
-);
+// The index below the selected work runs newest-first, with 'order' as tiebreaker.
+const index = [...projects].sort((a, b) => {
+  const yearDiff = startYear(b.entry.year) - startYear(a.entry.year);
+  if (yearDiff !== 0) return yearDiff;
+  const ao = a.entry.order ?? 100;
+  const bo = b.entry.order ?? 100;
+  return ao - bo;
+});
 
 // Sort dimensions — each chip toggles asc/desc; empty state = manual order.
 const SORTS = [
@@ -91,13 +95,14 @@ const EMAIL = 'indiantinker@gmail.com';
               class="row"
               data-cat={p.entry.category}
               data-year={startYear(p.entry.year)}
+              data-order={p.entry.order ?? 100}
               data-difficulty={score(p.entry, 'difficulty')}
               data-fun={score(p.entry, 'fun')}
               data-popularity={score(p.entry, 'popularity')}
               data-duration={score(p.entry, 'durationWeeks')}
             >
               <a href={`/projects/${p.slug}`} class="row__link" data-image={thumb ?? ''}>
-                {thumb && <img class="row__thumb" src={thumb} alt="" loading="lazy" />}
+                {thumb && <img class="row__thumb" data-src={thumb} alt="" loading="eager" />}
                 <div class="row__text">
                   <span class="row__year tnum">{p.entry.year}</span>
                   <span class="row__title">{p.entry.title}</span>
@@ -175,6 +180,13 @@ const EMAIL = 'indiantinker@gmail.com';
       if (!active) {
         // Empty state = the build-time (newest-first) order.
         rows.sort((a, b) => Number(a.dataset.i) - Number(b.dataset.i));
+      } else if (active === 'year') {
+        // Year sort: descending (newest first), order as tiebreaker.
+        rows.sort(
+          (a, b) =>
+            (Number(b.dataset.year) - Number(a.dataset.year)) * dir ||
+            (Number(a.dataset.order) - Number(b.dataset.order))
+        );
       } else {
         rows.sort((a, b) => (Number(a.dataset[active!]) - Number(b.dataset[active!])) * dir);
       }
@@ -272,6 +284,52 @@ const EMAIL = 'indiantinker@gmail.com';
 
     // Safety: if a row is clicked/navigated, drop the preview.
     document.addEventListener('pagehide', () => cursorImage.classList.remove('is-on'));
+  }
+</script>
+
+<script>
+  // Progressive thumbnail loader for touch / small-screen devices.
+  // Instead of letting the browser decode every in-viewport thumb at once
+  // (which causes jank on mobile), we load them in small batches with a
+  // staggered IntersectionObserver and fade each in on decode.
+  const thumbs = document.querySelectorAll<HTMLImageElement>('.row__thumb[data-src]');
+  if (thumbs.length) {
+    const BATCH = 3; // load this many at a time
+    let pending = Array.from(thumbs);
+    let inflight = 0;
+
+    const decode = (img: HTMLImageElement) => {
+      img.classList.add('row__thumb--loaded');
+    };
+
+    const loadNext = () => {
+      while (inflight < BATCH && pending.length) {
+        const img = pending.shift()!;
+        inflight++;
+        const src = img.dataset.src!;
+        img.removeAttribute('data-src');
+        img.src = src;
+        img.decode()
+          .then(() => decode(img))
+          .catch(() => decode(img)) // show even if decode fails
+          .finally(() => {
+            inflight--;
+            if (pending.length) loadNext();
+          });
+      }
+    };
+
+    // Kick off the first batch as soon as any thumb enters the viewport.
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          loadNext();
+          obs.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    thumbs.forEach((t) => obs.observe(t));
   }
 </script>
 
@@ -550,6 +608,11 @@ const EMAIL = 'indiantinker@gmail.com';
     object-fit: cover;
     object-position: top;
     margin-bottom: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .row__thumb--loaded {
+    opacity: 1;
   }
   @media (hover: hover) and (pointer: fine) {
     .row__thumb {

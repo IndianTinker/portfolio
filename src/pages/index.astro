@@ -27,10 +27,32 @@ const upcoming = projects.filter(
 );
 
 const testimonials = home?.testimonials ?? [];
+const companies = home?.companies ?? [];
 ---
 
 <Base>
     <Hero greeting={greeting} intro={intro} images={ring} />
+
+  {
+    companies.length > 0 && (
+      <section class="wrap">
+        <h2 class="eyebrow section-head">Companies & Collaborators</h2>
+        <ul class="logos">
+          {companies.map((c) => (
+            <li class="logos__item">
+              {c.url ? (
+                <a href={c.url} target="_blank" rel="noopener">
+                  <img src={c.logo} alt={c.name} class="logos__img" loading="lazy" />
+                </a>
+              ) : (
+                <img src={c.logo} alt={c.name} class="logos__img" loading="lazy" />
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   <section class="wrap">
     <h2 class="eyebrow section-head">Selected Projects</h2>
@@ -179,5 +201,31 @@ const testimonials = home?.testimonials ?? [];
   }
   .quote__cite a:hover {
     opacity: 0.5;
+  }
+
+  /* Companies logo strip. */
+  .logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .logos__item {
+    flex: 0 0 auto;
+  }
+  .logos__img {
+    height: 2rem;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.5;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+  }
+  .logos__item:hover .logos__img {
+    filter: grayscale(0);
+    opacity: 1;
   }
 </style>

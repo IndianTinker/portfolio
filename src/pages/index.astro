@@ -33,19 +33,24 @@ const companies = home?.companies ?? [];
 <Base>
     <Hero greeting={greeting} intro={intro} images={ring} />
 
+  <section class="wrap">
+    <h2 class="eyebrow section-head">Selected Projects</h2>
+    <div class="selected-row">
+      {featured.map((project) => <SelectedCard project={project} />)}
+    </div>
+  </section>
+
   {
     companies.length > 0 && (
-      <section class="wrap">
-        <h2 class="eyebrow section-head">Companies & Collaborators</h2>
+      <section class="wrap logos-section">
+        <h2 class="eyebrow section-head">Companies who trust me</h2>
         <ul class="logos">
           {companies.map((c) => (
             <li class="logos__item">
-              {c.url ? (
-                <a href={c.url} target="_blank" rel="noopener">
-                  <img src={c.logo} alt={c.name} class="logos__img" loading="lazy" />
-                </a>
-              ) : (
+              {c.logo ? (
                 <img src={c.logo} alt={c.name} class="logos__img" loading="lazy" />
+              ) : (
+                <span class="logos__name">{c.name}</span>
               )}
             </li>
           ))}
@@ -53,13 +58,6 @@ const companies = home?.companies ?? [];
       </section>
     )
   }
-
-  <section class="wrap">
-    <h2 class="eyebrow section-head">Selected Projects</h2>
-    <div class="selected-row">
-      {featured.map((project) => <SelectedCard project={project} />)}
-    </div>
-  </section>
 
   {
     upcoming.length > 0 && (
@@ -204,6 +202,9 @@ const companies = home?.companies ?? [];
   }
 
   /* Companies logo strip. */
+  .logos-section {
+    padding-top: clamp(3rem, 7vw, 5rem);
+  }
   .logos {
     list-style: none;
     margin: 0;
@@ -211,21 +212,21 @@ const companies = home?.companies ?? [];
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
+    justify-content: center;
+    gap: clamp(1.25rem, 4vw, 3rem);
   }
   .logos__item {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
+    min-width: 0;
   }
   .logos__img {
-    height: 2rem;
+    height: clamp(1.4rem, 2.2vw, 2rem);
     width: auto;
+    max-width: 100%;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.5;
-    transition: opacity 0.2s ease, filter 0.2s ease;
   }
-  .logos__item:hover .logos__img {
-    filter: grayscale(0);
-    opacity: 1;
+  .logos__name {
+    font-size: 0.875rem;
+    opacity: 0.6;
   }
 </style>

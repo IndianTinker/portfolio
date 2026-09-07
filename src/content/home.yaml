@@ -1,4 +1,103 @@
 greeting: Hello!
 intro: I am a designer and an engineer. I like to build things for creative enquiry.
-companies: []
+companies:
+  - name: Propelland
+    logo: /images/companies/propelland.com.png
+    url: https://www.propelland.com
+  - name: The Overview Effect
+    logo: /images/companies/the-overview-effect.svg
+    url: ''
+  - name: IED Madrid
+    logo: /images/companies/iedmadrid.com.svg
+    url: https://www.iedmadrid.com
+  - name: IDC School of Design, IIT Bombay
+    logo: /images/companies/idc.iitb.ac.in.png
+    url: https://www.idc.iitb.ac.in
+  - name: Tata Motors
+    logo: /images/companies/tatamotors.com.svg
+    url: https://www.tatamotors.com
+  - name: Museo Reina Sofía
+    logo: /images/companies/museoreinasofia.es.svg
+    url: https://www.museoreinasofia.es
+  - name: heated.studio
+    logo: /images/companies/heated.studio.png
+    url: https://heated.studio
+  - name: Estrella Galicia
+    logo: /images/companies/hijos-de-rivera.svg
+    url: https://www.hijosderivera.com
+  - name: Coca-Cola
+    logo: /images/companies/coca-cola.svg
+    url: https://www.coca-cola.com
+  - name: BBVA
+    logo: /images/companies/bbva.svg
+    url: https://www.bbva.com
+  - name: Telefónica
+    logo: /images/companies/telefonica.svg
+    url: https://www.telefonica.com
+  - name: AS
+    logo: /images/companies/as-com.svg
+    url: https://as.com
+  - name: HAVAS
+    logo: /images/companies/havas.png
+    url: https://www.havas.com
+  - name: Andtonic
+    logo: /images/companies/andtonic.png
+    url: https://www.andtonic.es
+  - name: IKEA
+    logo: /images/companies/ikea.svg
+    url: https://www.ikea.com
+  - name: Jaguar Land Rover
+    logo: /images/companies/jaguar-land-rover.svg
+    url: https://www.jaguarlandrover.com
+  - name: Xunta de Galicia
+    logo: /images/companies/xunta-de-galicia.svg
+    url: https://www.xunta.gal
+  - name: Indra
+    logo: /images/companies/indra.svg
+    url: https://www.indracompany.com
+  - name: IBM
+    logo: /images/companies/ibm.svg
+    url: https://www.ibm.com
+  - name: Dulcie
+    logo: /images/companies/dulcie-world.svg
+    url: https://www.dulcie.world
+  - name: Inditex
+    logo: /images/companies/inditex.svg
+    url: https://www.inditex.com
+  - name: Venice Biennale
+    logo: /images/companies/venice-biennale.svg
+    url: https://www.labiennale.org
+  - name: SpY Urban Art
+    logo: /images/companies/spy-urbanart.svg
+    url: https://spy-urbanart.com
+  - name: Nokia
+    logo: /images/companies/nokia.svg
+    url: https://www.nokia.com
+  - name: Bell Labs
+    logo: /images/companies/bell-labs.svg
+    url: https://www.bell-labs.com
+  - name: UDIT
+    logo: /images/companies/udit.png
+    url: https://www.udit.es
+  - name: Angewandte Wien
+    logo: /images/companies/angewandte-kunst.svg
+    url: https://uni-ak.ac.at
+  - name: Domus Academy
+    logo: /images/companies/domus-academy.svg
+    url: https://www.domusacademy.com
+  - name: Huspy
+    logo: /images/companies/huspy.svg
+    url: https://huspy.com
+  - name: Pfizer
+    logo: /images/companies/pfizer.svg
+    url: https://www.pfizer.com
+  - name: Ubicuity
+    logo: /images/companies/ubicuity.svg
+    url: https://ubicuity.com
+  - name: Master LAV
+    logo: /images/companies/master-lav.png
+    url: https://master-lav.com
+  - name: OIO Studio
+    logo: /images/companies/oio-studio.svg
+    url: https://oio.studio
 testimonials: []

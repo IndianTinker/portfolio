@@ -37,7 +37,7 @@ export function parseVideo(url: string): ParsedVideo {
 function youtube(id: string): ParsedVideo {
   return {
     provider: 'youtube',
-    embedUrl: `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`,
+    embedUrl: `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&mute=1`,
     thumb: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
   };
 }
